@@ -1,6 +1,8 @@
 package org.example.javafx;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -23,6 +25,11 @@ public class Homepage extends Application {
         Button remove = new Button("Remove a lecture");
         Button view = new Button("View schedule");
 
+        //adding event handler for buttons
+        add.setOnAction(new addButtonHandler());
+        remove.setOnAction(new RemoveButtonHandler());
+        view.setOnAction(new ViewButtonHandler());
+
 
         // setting up stage and scene
         stage.setTitle("Homepage");
@@ -33,11 +40,6 @@ public class Homepage extends Application {
         Scene scene = new Scene(box, 500, 500);
         stage.setScene(scene);
         stage.show();
-
-
-
-
-
-
     }
+
 }
