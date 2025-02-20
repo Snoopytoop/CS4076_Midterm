@@ -4,13 +4,29 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Server {
     // Initialising ServerSocket
     private static ServerSocket serverSocket = null;
 
+    // This is a basic arrayList I just made to text things
+    static ArrayList<String> arrLst = new ArrayList<>();
+
+
+    // basic array used to test things
+    static Lecture[][] lectures = new Lecture[9][5];
+
+
+
+
     // Utility method for setting up server socket
     private static void setup() {
+
+        // also for testing
+        lectures[0][0] = new Lecture("Programming", "FB-028");
+        lectures[3][4] = new Lecture("Maths", "FB-029");
+
         try {
             serverSocket = new ServerSocket(1234);
             System.out.println("Server is running... Waiting for clients...");
@@ -35,7 +51,16 @@ public class Server {
                     System.out.println("Received: " + message);
                     out.println("Echo: " + message);
 
+                    String messageHead = message.split("-")[0];
+                    String messageBody = message.split("-")[1];
+                    if (messageHead.equals("x")) {
+                        arrLst.add(messageBody);
+                        System.out.println(arrLst.getLast());
+                    }
+
                     message = in.readLine();  // Read the next message
+
+
                 }
 
             } catch (IOException e) {
