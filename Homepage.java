@@ -1,5 +1,4 @@
 package org.example.javafx;
-
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -9,7 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -104,7 +102,18 @@ public class Homepage extends Application {
     }
 
     public static void sendButtonMessage() {
-        out.println("x-thing added!");
+        //out.println("x-thing added!");
+
+        // sending message to server to request array
+        out.println("arrayRequest");
+
+        // getting response from server
+        try {
+            String input = in.readLine();
+            System.out.println(input);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -122,7 +131,6 @@ public class Homepage extends Application {
         //adding event handler for buttons
         add.setOnAction(new addButtonHandler());
         remove.setOnAction(new RemoveButtonHandler());
-        view.setOnAction(new ViewButtonHandler());
 
         // setting up event handler for send button
         send.setOnAction(new EventHandler<ActionEvent>() {
@@ -149,6 +157,12 @@ public class Homepage extends Application {
             setStreams();
             sendMessage();
         }).start();
+
+        // view button handler
+        ViewButtonHandler viewButtonHandler = new ViewButtonHandler();
+        viewButtonHandler.setIn(in);
+        viewButtonHandler.setOut(out);
+        view.setOnAction(viewButtonHandler);
 
 
     }

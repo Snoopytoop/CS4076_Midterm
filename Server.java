@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Server {
     // Initialising ServerSocket
@@ -49,13 +50,22 @@ public class Server {
                 message = in.readLine();  // Read the first message before entering the loop
                 while (message != null) {
                     System.out.println("Received: " + message);
-                    out.println("Echo: " + message);
+                    //out.println("Echo: " + message);
 
-                    String messageHead = message.split("-")[0];
-                    String messageBody = message.split("-")[1];
-                    if (messageHead.equals("x")) {
-                        arrLst.add(messageBody);
-                        System.out.println(arrLst.getLast());
+                   // String messageHead = message.split("-")[0];
+                    //String messageBody = message.split("-")[1];
+
+                    // method for testing
+                    //if (messageHead.equals("x")) {
+                    //    arrLst.add(messageBody);
+                    //    System.out.println(arrLst.getLast());
+                    //}
+
+                    // condition to send array
+                    if (message.equals("arrayRequest")) {
+                        //System.out.println(Arrays.deepToString(lectures));
+                        out.println(Arrays.deepToString(lectures));
+                        //System.out.println("request recieved");
                     }
 
                     message = in.readLine();  // Read the next message

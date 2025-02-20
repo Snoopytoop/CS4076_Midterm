@@ -12,9 +12,36 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 public class ViewButtonHandler implements EventHandler<ActionEvent> {
+    private PrintWriter out;
+    private BufferedReader in;
+
+    public void setOut(PrintWriter out) {
+        this.out = out;
+    }
+
+    public void setIn(BufferedReader in) {
+        this.in = in;
+    }
+
     @Override
     public void handle(ActionEvent actionEvent) {
+        // sending message to server to request array
+        out.println("arrayRequest");
+
+        // getting response from server
+        try {
+            String input = in.readLine();
+            System.out.println(input);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
         // Setting up Stage
         Stage stage = new Stage();
         stage.setTitle("Add a lecture");
