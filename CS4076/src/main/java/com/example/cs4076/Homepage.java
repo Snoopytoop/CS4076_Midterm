@@ -130,27 +130,27 @@ public class Homepage extends Application {
         Button view = new Button("View schedule");
         Button send = new Button("Send a message");
 
-        // Adding event handlers for buttons
-        add.setOnAction(new AddButtonHandler());
-        remove.setOnAction(new RemoveButtonHandler());
-
-        // Setting up event handler for send button
-        send.setOnAction(event -> sendButtonMessage());
-
         // Setting up stage and scene
         stage.setTitle("Homepage");
         VBox box = new VBox();
         box.setAlignment(Pos.CENTER);
         box.setSpacing(10);
         box.getChildren().addAll(label, add, remove, view, send);
-        Scene homeScene = new Scene(box, 500, 500); // Homepage scene
+        Scene homeScene = new Scene(box, Client.WIDTH, Client.HEIGHT); // Homepage scene
         stage.setScene(homeScene);
         stage.show();
 
-        // Initialize the ViewButtonHandler with in, out, stage, and homeScene
-        ViewButtonHandler viewButtonHandler = new ViewButtonHandler(in, out, stage, homeScene);
+        // Initialize handlers with stage, homeScene, in, and out
+        AddButtonHandler addButtonHandler = new AddButtonHandler(stage, homeScene, in, out);
+        RemoveButtonHandler removeButtonHandler = new RemoveButtonHandler(stage, homeScene);
+        ViewButtonHandler viewButtonHandler = new ViewButtonHandler(stage, homeScene, in, out);
 
-        // Set the handler for the "View Schedule" button
+        // Set handlers for buttons
+        add.setOnAction(addButtonHandler);
+        remove.setOnAction(removeButtonHandler);
         view.setOnAction(viewButtonHandler);
+
+        // Setting up event handler for send button
+        send.setOnAction(event -> sendButtonMessage());
     }
 }

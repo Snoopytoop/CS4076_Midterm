@@ -10,25 +10,33 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class RemoveButtonHandler implements EventHandler<ActionEvent> {
+    private final Stage stage; // Existing stage
+    private final Scene homeScene; // Homepage scene
+
+    public RemoveButtonHandler(Stage stage, Scene homeScene) {
+        this.stage = stage;
+        this.homeScene = homeScene;
+    }
+
     @Override
     public void handle(ActionEvent actionEvent) {
-        // Setting up Stage
-        Stage stage = new Stage();
-        stage.setTitle("Add a lecture");
-
-        // Setting up scene
+        // Setting up scene for removing lectures
         Label label = new Label("Page for removing lectures");
         Button back = new Button("Go back");
         VBox box = new VBox();
         box.setAlignment(Pos.CENTER);
         box.getChildren().addAll(label, back);
-        Scene scene = new Scene(box, 500, 500);
-        stage.setScene(scene);
-        stage.show();
+        Scene removeScene = new Scene(box, Client.WIDTH, Client.HEIGHT); // Use WIDTH and HEIGHT
 
-        // Handling back button
-        BackButtonHandler backButtonHandler = new BackButtonHandler();
-        backButtonHandler.setStage(stage);
-        back.setOnAction(backButtonHandler);
+        // Set the remove scene to the existing stage
+        stage.setScene(removeScene);
+        stage.setTitle("Remove a Lecture");
+
+        // Handle the back button
+        back.setOnAction(event -> {
+            // Switch back to the homepage scene
+            stage.setScene(homeScene);
+            stage.setTitle("Homepage");
+        });
     }
 }
