@@ -1,4 +1,4 @@
-package com.example.cs4076;
+package org.example.javafx;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -65,9 +65,24 @@ public class Server {
 
                     // condition to send array
                     if (message.equals("arrayRequest")) {
-                        //System.out.println(Arrays.deepToString(lectures));
-                        out.println(Arrays.deepToString(lectures));
-                        //System.out.println("request recieved");
+
+                        //out.println(Arrays.deepToString(lectures));
+
+                        // converting lectures array to a string for sending
+                        String output = "";
+                        for (int i = 0; i < lectures.length; i++) {
+                            for (int j = 0; j < lectures[i].length; j++) {
+                                if (lectures[i][j] != null) {
+                                    output = output + lectures[i][j].getName() + " + " + lectures[i][j].getRoom() + ",";
+                                }
+                                else {
+                                    output = output + "null , ";
+                                }
+                            }
+                        }
+
+                        out.println(output);
+
                     }
 
                     message = in.readLine();  // Read the next message
