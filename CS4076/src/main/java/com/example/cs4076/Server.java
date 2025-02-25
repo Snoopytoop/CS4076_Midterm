@@ -50,6 +50,9 @@ public class Server {
 
                 String message;
                 message = in.readLine();  // Read the first message before entering the loop
+                String[] messages = message.split(",");
+                String head = messages[0];
+                String body = messages[1];
                 while (message != null) {
                     System.out.println("Received: " + message);
                     //out.println("Echo: " + message);
@@ -64,7 +67,7 @@ public class Server {
                     //}
 
                     // condition to send array
-                    if (message.equals("arrayRequest")) {
+                    if (head.equals("arrayRequest")) {
 
                         //out.println(Arrays.deepToString(lectures));
 
@@ -84,6 +87,29 @@ public class Server {
                         out.println(output);
 
                     }
+
+                    // condition to remove a lecture
+                    else if (head.equals("remove")) {
+                        String[] arrParts = body.split("-");
+                        int row = Integer.parseInt(arrParts[0]);
+                        int col = Integer.parseInt(arrParts[1]);
+                        lectures[row][col] = null;
+
+                        String output = "";
+                        for (int i = 0; i < lectures.length; i++) {
+                            for (int j = 0; j < lectures[i].length; j++) {
+                                if (lectures[i][j] != null) {
+                                    output = output + lectures[i][j].getName() + " " + lectures[i][j].getRoom() + ",";
+                                }
+                                else {
+                                    output = output + "null , ";
+                                }
+                            }
+                        }
+
+                        out.println(output);
+                    }
+                    
 
                     message = in.readLine();  // Read the next message
 
