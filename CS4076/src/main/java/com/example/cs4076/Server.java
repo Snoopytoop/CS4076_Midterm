@@ -73,7 +73,7 @@ public class Server {
                         for (int i = 0; i < lectures.length; i++) {
                             for (int j = 0; j < lectures[i].length; j++) {
                                 if (lectures[i][j] != null) {
-                                    output = output + lectures[i][j].getName() + " + " + lectures[i][j].getRoom() + ",";
+                                    output = output + lectures[i][j].getName() + " " + lectures[i][j].getRoom() + ",";
                                 }
                                 else {
                                     output = output + "null , ";

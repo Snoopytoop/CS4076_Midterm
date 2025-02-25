@@ -1,4 +1,4 @@
-package com.example.cs4076;
+package org.example.javafx;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,6 +13,8 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+
+import java.util.Arrays;
 
 public class Timetable {
     private final GridPane gridPane;
@@ -78,6 +80,12 @@ public class Timetable {
         }
     }
 
+    // Method to handle button click
+    private void handleSlotSelection(int dayIndex, int timeIndex) {
+        System.out.println("Selected: " + DAYS[dayIndex] + " " + TIMES[timeIndex]);
+    }
+
+
     // Populate the grid with lecture data
     public void populateGrid(String[] scheduleArray) {
         if (scheduleArray == null) return;
@@ -85,20 +93,47 @@ public class Timetable {
         for (int i = 0; i < DAYS.length; i++) {
             for (int j = 0; j < TIMES.length; j++) {
                 int index = i * TIMES.length + j;
-                if (index < scheduleArray.length) {
-                    String lecture = scheduleArray[index];
-                    if (!"null".equals(lecture)) {
-                        Label lectureLabel = new Label(lecture);
-                        lectureLabel.setStyle(
-                                "-fx-font-size: 12px; " + // Smaller font size for lectures
-                                        "-fx-text-fill: #145A32;" // Dark green text color
-                        );
-                        gridPane.add(lectureLabel, j + 1, i + 1);
-                    }
+                Button button;
+
+                if (index < scheduleArray.length && !"null".equals(scheduleArray[index].trim())) {
+                    String[] info = scheduleArray[index].trim().split(" ");
+                    button = new Button(info[0] + "\n" + info[1]);
+                    button.setStyle("-fx-background-color: #87CEFA;" +
+                            "-fx-font-size: 12px; " +
+                            "-fx-text-fill: white; " +
+                            "-fx-font-weight: bold;");
+                } else {
+                    button = new Button(" "); // Empty button for null slots
+                    button.setStyle("-fx-background-color: #ccffda;" +
+                            "-fx-font-size: 12px; " +
+                            "-fx-text-fill: white; " +
+                            "-fx-font-weight: bold;");
                 }
+
+                // Set uniform size for all buttons
+                button.setMinSize(80, 40);  // Minimum width and height
+                button.setPrefSize(100, 50); // Preferred width and height
+                button.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE); // Expand to fill cell
+
+                // Style the button
+                /*
+                button.setStyle(
+                        "-fx-font-size: 12px; " +
+                                "-fx-text-fill: white; " +
+                                "-fx-font-weight: bold;"
+                );
+
+                 */
+
+                // Make the button expand fully inside the grid cell
+                GridPane.setHgrow(button, Priority.ALWAYS);
+                GridPane.setVgrow(button, Priority.ALWAYS);
+
+                gridPane.add(button, j + 1, i + 1);
             }
         }
     }
+
 
     // Add buttons for null slots (for the "Add Lecture" view)
     public void addButtonsForNullSlots(String[] scheduleArray, EventHandler<ActionEvent> buttonHandler) {
