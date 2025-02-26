@@ -1,4 +1,4 @@
-package com.example.cs4076;
+package org.example.javafx;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,10 +15,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class AddButtonHandler implements EventHandler<ActionEvent> {
-    private final Stage stage; // Existing stage
-    private final Scene homeScene; // Homepage scene
-    private final BufferedReader in; // Input stream from server
-    private final PrintWriter out; // Output stream to server
+    private  Stage stage; // Existing stage
+    private  Scene homeScene; // Homepage scene
+    private  BufferedReader in; // Input stream from server
+    private  PrintWriter out; // Output stream to server
 
     public AddButtonHandler(Stage stage, Scene homeScene, BufferedReader in, PrintWriter out) {
         this.stage = stage;
@@ -46,7 +46,7 @@ public class AddButtonHandler implements EventHandler<ActionEvent> {
         }
 
         // Create a timetable and populate it with lecture data
-        Timetable timetable = new Timetable();
+        Timetable timetable = new Timetable(out, stage, homeScene, in);
         timetable.populateGrid(scheduleArray);
 
         // Create the back button

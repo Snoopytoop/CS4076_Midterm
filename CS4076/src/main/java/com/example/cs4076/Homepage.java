@@ -1,4 +1,4 @@
-package com.example.cs4076;
+package org.example.javafx;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -142,7 +142,7 @@ public class Homepage extends Application {
 
         // Initialize handlers with stage, homeScene, in, and out
         AddButtonHandler addButtonHandler = new AddButtonHandler(stage, homeScene, in, out);
-        RemoveButtonHandler removeButtonHandler = new RemoveButtonHandler(stage, homeScene);
+        RemoveButtonHandler removeButtonHandler = new RemoveButtonHandler(stage, homeScene, in, out);
         ViewButtonHandler viewButtonHandler = new ViewButtonHandler(stage, homeScene, in, out);
 
         // Set handlers for buttons

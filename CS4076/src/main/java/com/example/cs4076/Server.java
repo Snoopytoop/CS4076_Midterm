@@ -6,27 +6,17 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Server {
-    // Initialising ServerSocket
+    // Initializing ServerSocket
     private static ServerSocket serverSocket = null;
 
-    // This is a basic arrayList I just made to text things
-    static ArrayList<String> arrLst = new ArrayList<>();
-
-
-    // basic array used to test things
+    // Basic array used to test things
     static Lecture[][] lectures = new Lecture[9][5];
-
-
-
 
     // Utility method for setting up server socket
     private static void setup() {
-
-        // also for testing
+        // Initial test values
         lectures[0][0] = new Lecture("Programming", "FB-028");
         lectures[3][4] = new Lecture("Maths", "FB-029");
 
@@ -48,72 +38,32 @@ public class Server {
 
                 System.out.println("Client connected: " + link.getInetAddress());
 
-                String message;
-                message = in.readLine();  // Read the first message before entering the loop
-                String[] messages = message.split(",");
-                String head = messages[0];
-                String body = messages[1];
+                String message = in.readLine(); // Read first message before loop
+
                 while (message != null) {
-                    System.out.println("Received: " + message);
-                    //out.println("Echo: " + message);
-
-                    // String messageHead = message.split("-")[0];
-                    //String messageBody = message.split("-")[1];
-
-                    // method for testing
-                    //if (messageHead.equals("x")) {
-                    //    arrLst.add(messageBody);
-                    //    System.out.println(arrLst.getLast());
-                    //}
-
-                    // condition to send array
-                    if (head.equals("arrayRequest")) {
-
-                        //out.println(Arrays.deepToString(lectures));
-
-                        // converting lectures array to a string for sending
-                        String output = "";
-                        for (int i = 0; i < lectures.length; i++) {
-                            for (int j = 0; j < lectures[i].length; j++) {
-                                if (lectures[i][j] != null) {
-                                    output = output + lectures[i][j].getName() + " " + lectures[i][j].getRoom() + ",";
-                                }
-                                else {
-                                    output = output + "null , ";
-                                }
-                            }
-                        }
-
+                    // Condition to send array
+                    if (message.split(",")[0].equals("arrayRequest")) {
+                        String output = convertArrayToString();
                         out.println(output);
-
                     }
+                    // Condition to remove a lecture
+                    else if (message.split(",")[0].equals("remove")) {
 
-                    // condition to remove a lecture
-                    else if (head.equals("remove")) {
-                        String[] arrParts = body.split("-");
+                        String[] arrParts = message.split(",")[1].split("-");
                         int row = Integer.parseInt(arrParts[0]);
                         int col = Integer.parseInt(arrParts[1]);
+
+                        // Remove the lecture
                         lectures[row][col] = null;
 
-                        String output = "";
-                        for (int i = 0; i < lectures.length; i++) {
-                            for (int j = 0; j < lectures[i].length; j++) {
-                                if (lectures[i][j] != null) {
-                                    output = output + lectures[i][j].getName() + " " + lectures[i][j].getRoom() + ",";
-                                }
-                                else {
-                                    output = output + "null , ";
-                                }
-                            }
-                        }
-
+                        // Send updated array
+                        String output = convertArrayToString();
                         out.println(output);
                     }
-                    
 
-                    message = in.readLine();  // Read the next message
+                    //condition to add a lecture (needs to be added)
 
-
+                    message = in.readLine();  // Read next message
                 }
 
             } catch (IOException e) {
@@ -122,9 +72,22 @@ public class Server {
         }
     }
 
+    // Helper method to convert the lecture array to a string for sending
+    private static String convertArrayToString() {
+        StringBuilder output = new StringBuilder();
+        for (int i = 0; i < lectures.length; i++) {
+            for (int j = 0; j < lectures[i].length; j++) {
+                if (lectures[i][j] != null) {
+                    output.append(lectures[i][j].getName()).append(" ").append(lectures[i][j].getRoom()).append(",");
+                } else {
+                    output.append("null,");
+                }
+            }
+        }
+        return output.toString();
+    }
+
     public static void main(String[] args) {
         setup();
-
     }
 }
-
