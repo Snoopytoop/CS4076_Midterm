@@ -9,21 +9,9 @@ import javafx.application.Application;
 
 public class Client {
 
-    // Define width and height variables
-    public static final int WIDTH = 700;
-    public static final int HEIGHT = 700;
-    // initialising IP address
-    private static InetAddress IPAddress;
-    // setting port number
-    private static int PORT = 1234;
-    // initialising Socket
-    private static Socket link = null;
-    // initialising BufferedReaders
-    private static BufferedReader in = null;
-    private static BufferedReader userEntry = null;
-    // initialising Printwriter
-    private static PrintWriter out = null;
-
+    // set stage width and height
+    public static final int WIDTH = ScreenResolution.getScreenWidth()-200;
+    public static final int HEIGHT = ScreenResolution.getScreenHeight()-200;
 
     public static void main(String[] args) throws Exception {
         Application.launch(Homepage.class, args);

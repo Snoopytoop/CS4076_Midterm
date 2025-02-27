@@ -7,26 +7,21 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 public class Server {
-    // Initialising ServerSocket
+    // Initializing ServerSocket
     private static ServerSocket serverSocket = null;
 
-    // This is a basic arrayList I just made to text things
-    static ArrayList<String> arrLst = new ArrayList<>();
-
-
-    // basic array used to test things
+    // Basic array used to test things
     static Lecture[][] lectures = new Lecture[9][5];
 
-    static ArrayList<String> messageBoard = new ArrayList<>();
-
+    // ArrayList to store messages
+    static List<String> messages = new ArrayList<>();
 
     // Utility method for setting up server socket
     private static void setup() {
-
-        // also for testing
+        // Initial test values
         lectures[0][0] = new Lecture("Programming", "FB-028");
         lectures[3][4] = new Lecture("Maths", "FB-029");
 
@@ -48,77 +43,76 @@ public class Server {
 
                 System.out.println("Client connected: " + link.getInetAddress());
 
-                String message;
-                while ((message = in.readLine()) != null) {  // Read messages in a loop
-                    System.out.println("Received: " + message);
+                String message = in.readLine(); // Read first message before loop
 
-                    // Split the message into head and body
-                    String[] parts = message.split(",");
-                    String head = parts[0];
-                    String body = parts.length > 1 ? parts[1] : "";  // Handle cases where body might be missing
-
-                    // Handle array request
-                    if (head.equals("arrayRequest")) {
-                        String output = "";
-                        for (int i = 0; i < lectures.length; i++) {
-                            for (int j = 0; j < lectures[i].length; j++) {
-                                if (lectures[i][j] != null) {
-                                    output = output + lectures[i][j].getName() + " " + lectures[i][j].getRoom() + ",";
-                                } else {
-                                    output = output + "null , ";
-                                }
-                            }
-                        }
+                while (message != null) {
+                    // Condition to send array
+                    if (message.split(",")[0].equals("arrayRequest")) {
+                        String output = convertArrayToString();
                         out.println(output);
                     }
-
-                    else if (head.equals("sendMessage")) {
-                        messageBoard.add(0, body); // Add message at the top of the list
-                        out.println("Message sent successfully");
-                        System.out.println("Message added: " + body); // Debug statement
-                    }
-
-                    else if (head.equals("viewMessageBoard")) {
-                        StringBuilder messages = new StringBuilder();
-                        for (String msg : messageBoard) {
-                            messages.append(msg).append("\n"); // Add each message followed by a newline
-                        }
-                        String messageString = messages.toString();
-                        System.out.println("Sending messages:\n" + messageString); // Debug statement
-                        out.println(messageString); // Send all messages as a single string
-                    }
-
-                    // Handle remove lecture request
-                    else if (head.equals("remove")) {
-                        String[] arrParts = body.split("-");
+                    // Condition to remove a lecture
+                    else if (message.split(",")[0].equals("remove")) {
+                        String[] arrParts = message.split(",")[1].split("-");
                         int row = Integer.parseInt(arrParts[0]);
                         int col = Integer.parseInt(arrParts[1]);
+
+                        // Remove the lecture
                         lectures[row][col] = null;
 
-                        String output = "";
-                        for (int i = 0; i < lectures.length; i++) {
-                            for (int j = 0; j < lectures[i].length; j++) {
-                                if (lectures[i][j] != null) {
-                                    output = output + lectures[i][j].getName() + " " + lectures[i][j].getRoom() + ",";
-                                } else {
-                                    output = output + "null , ";
-                                }
-                            }
-                        }
+                        // Send updated array
+                        String output = convertArrayToString();
                         out.println(output);
                     }
+                    // Condition to add a lecture
+                    else if (message.split(",")[0].equals("add")) {
+                        String[] arrParts = message.split(",")[1].split("-");
+                        String subject = arrParts[0];
+                        String room = arrParts[1];
+                        int row = Integer.parseInt(arrParts[2]);
+                        int col = Integer.parseInt(arrParts[3]);
+
+                        lectures[row][col] = new Lecture(subject, room);
+                        String output = convertArrayToString();
+                        out.println(output);
+                    }
+                    // Condition to send a message to the message board
+                    else if (message.split(",")[0].equals("sendMessage")) {
+                        String newMessage = message.split(",")[1];
+                        messages.add(newMessage); // Add the message to the list
+                        out.println("Message sent successfully!");
+                    }
+                    // Condition to fetch all messages from the message board
+                    else if (message.split(",")[0].equals("fetchMessages")) {
+                        String allMessages = String.join(",", messages); // Convert list to a single string
+                        out.println(allMessages); // Send the messages to the client
+                    }
+
+                    message = in.readLine();  // Read next message
                 }
 
             } catch (IOException e) {
                 System.err.println("Connection error: " + e.getMessage());
             }
         }
+    }
 
+    // Helper method to convert the lecture array to a string for sending
+    private static String convertArrayToString() {
+        StringBuilder output = new StringBuilder();
+        for (int i = 0; i < lectures.length; i++) {
+            for (int j = 0; j < lectures[i].length; j++) {
+                if (lectures[i][j] != null) {
+                    output.append(lectures[i][j].getName()).append(" ").append(lectures[i][j].getRoom()).append(",");
+                } else {
+                    output.append("null,");
+                }
+            }
+        }
+        return output.toString();
     }
 
     public static void main(String[] args) {
         setup();
-
     }
 }
-

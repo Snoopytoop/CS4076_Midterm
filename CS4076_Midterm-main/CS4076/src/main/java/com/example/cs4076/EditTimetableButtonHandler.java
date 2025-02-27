@@ -5,7 +5,6 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -13,15 +12,14 @@ import javafx.stage.Stage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
 
-public class RemoveButtonHandler implements EventHandler<ActionEvent> {
-    private  Stage stage; // Existing stage
-    private  Scene homeScene; // Homepage scene
-    private  BufferedReader in; // Input stream from server
-    private  PrintWriter out; // Output stream to server
+public class EditTimetableButtonHandler implements EventHandler<ActionEvent> {
+    private Stage stage; // Existing stage
+    private Scene homeScene; // Homepage scene
+    private BufferedReader in; // Input stream from server
+    private PrintWriter out; // Output stream to server
 
-    public RemoveButtonHandler(Stage stage, Scene homeScene, BufferedReader in, PrintWriter out) {
+    public EditTimetableButtonHandler(Stage stage, Scene homeScene, BufferedReader in, PrintWriter out) {
         this.stage = stage;
         this.homeScene = homeScene;
         this.in = in;
@@ -31,7 +29,7 @@ public class RemoveButtonHandler implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent actionEvent) {
         // Send a request to the server to get the array
-        out.println("arrayRequest,blank");
+        out.println("arrayRequest");
 
         // Retrieve the array from the server
         String[] scheduleArray = null;
@@ -63,11 +61,11 @@ public class RemoveButtonHandler implements EventHandler<ActionEvent> {
         VBox.setVgrow(timetable.getGridPane(), Priority.ALWAYS);
 
         // Create the view schedule scene
-        Scene viewScene = new Scene(vbox, Client.WIDTH, Client.HEIGHT);
+        Scene viewScene = new Scene(vbox, Client.WIDTH, Client.HEIGHT); // Replace with actual width and height if Client.WIDTH and Client.HEIGHT are not defined
 
         // Set the view scene to the existing stage
         stage.setScene(viewScene);
-        stage.setTitle("View Schedule");
+        stage.setTitle("Edit Timetable");
 
         // Handle the back button
         back.setOnAction(event -> {

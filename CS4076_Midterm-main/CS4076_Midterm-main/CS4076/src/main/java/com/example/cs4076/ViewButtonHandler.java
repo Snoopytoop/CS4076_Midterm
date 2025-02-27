@@ -5,23 +5,21 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
 
-public class RemoveButtonHandler implements EventHandler<ActionEvent> {
-    private  Stage stage; // Existing stage
-    private  Scene homeScene; // Homepage scene
-    private  BufferedReader in; // Input stream from server
-    private  PrintWriter out; // Output stream to server
+public class ViewButtonHandler implements EventHandler<ActionEvent> {
+    private final Stage stage; // Existing stage
+    private final Scene homeScene; // Homepage scene
+    private final BufferedReader in; // Input stream from server
+    private final PrintWriter out; // Output stream to server
 
-    public RemoveButtonHandler(Stage stage, Scene homeScene, BufferedReader in, PrintWriter out) {
+    public ViewButtonHandler(Stage stage, Scene homeScene, BufferedReader in, PrintWriter out) {
         this.stage = stage;
         this.homeScene = homeScene;
         this.in = in;
@@ -31,7 +29,7 @@ public class RemoveButtonHandler implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent actionEvent) {
         // Send a request to the server to get the array
-        out.println("arrayRequest,blank");
+        out.println("arrayRequest");
 
         // Retrieve the array from the server
         String[] scheduleArray = null;
@@ -46,9 +44,9 @@ public class RemoveButtonHandler implements EventHandler<ActionEvent> {
             return;
         }
 
-        // Create a timetable and populate it with lecture data
-        Timetable timetable = new Timetable(out, stage, homeScene, in);
-        timetable.populateGrid(scheduleArray);
+        // Create a timetable and add buttons for null slots
+        Timetable timetable = new Timetable();
+        timetable.addButtonsForNullSlots(scheduleArray, this::handleSlotSelection);
 
         // Create the back button
         Button back = new Button("Go back");
@@ -59,14 +57,14 @@ public class RemoveButtonHandler implements EventHandler<ActionEvent> {
         vbox.setSpacing(10);
         vbox.getChildren().addAll(back, timetable.getGridPane());
 
-        // Make the VBox grow to fill the window
+        //make the vbox grow to fill the window
         VBox.setVgrow(timetable.getGridPane(), Priority.ALWAYS);
 
-        // Create the view schedule scene
-        Scene viewScene = new Scene(vbox, Client.WIDTH, Client.HEIGHT);
+        // Create the add lecture scene
+        Scene addScene = new Scene(vbox, Client.WIDTH, Client.HEIGHT); // Use WIDTH and HEIGHT
 
-        // Set the view scene to the existing stage
-        stage.setScene(viewScene);
+        // Set the add scene to the existing stage
+        stage.setScene(addScene);
         stage.setTitle("View Schedule");
 
         // Handle the back button
@@ -75,5 +73,20 @@ public class RemoveButtonHandler implements EventHandler<ActionEvent> {
             stage.setScene(homeScene);
             stage.setTitle("Homepage");
         });
+    }
+
+    // Handle slot selection
+    private void handleSlotSelection(ActionEvent event) {
+        Button button = (Button) event.getSource();
+        Integer rowIndex = GridPane.getRowIndex(button);
+        Integer columnIndex = GridPane.getColumnIndex(button);
+
+        if (rowIndex != null && columnIndex != null) {
+            // Send a request to the server to update the array
+            out.println("updateSlot:" + (rowIndex - 1) + ":" + (columnIndex - 1));
+
+            // Refresh the add lecture scene to reflect the updated array
+            handle(new ActionEvent());
+        }
     }
 }
