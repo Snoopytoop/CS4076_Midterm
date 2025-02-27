@@ -119,8 +119,9 @@ public class Timetable {
                             "-fx-text-fill: white; " +
                             "-fx-font-weight: bold;");
 
+                    String position = i + "-" + j;
                     button.setOnAction(event -> {
-                        AddWindow addWindow = new AddWindow(out);
+                        AddWindow addWindow = new AddWindow(out, position);
                         addWindow.showWindow(stage);
                     });
                 }

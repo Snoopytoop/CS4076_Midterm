@@ -62,6 +62,17 @@ public class Server {
                     }
 
                     //condition to add a lecture (needs to be added)
+                    else if (message.split(",")[0].equals("add")) {
+                        String[] arrParts = message.split(",")[1].split("-");
+                        String subject = arrParts[0];
+                        String room = arrParts[1];
+                        int row = Integer.parseInt(arrParts[2]);
+                        int col = Integer.parseInt(arrParts[3]);
+
+                        lectures[row][col] = new Lecture(subject, room);
+                        String output = convertArrayToString();
+                        out.println(output);
+                    }
 
                     message = in.readLine();  // Read next message
                 }
