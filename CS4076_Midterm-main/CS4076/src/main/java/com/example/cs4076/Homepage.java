@@ -42,10 +42,10 @@ public class Homepage extends Application {
         }
     }
 
-    // Utility method for getting IP address of local host
+    // get local host IP address (server)
     private static void getAddress() {
         try {
-            // setting IP address to address of local host
+            //set ip to localhost ip
             IPAddress = InetAddress.getLocalHost();
         }
         // catching exception if host not found
@@ -55,23 +55,23 @@ public class Homepage extends Application {
         }
     }
 
-    // Utility method for connecting to server
+    //connect to server
     private static void serverConnect() {
         try {
-            link = new Socket(IPAddress, PORT); // Step 1.
+            link = new Socket(IPAddress, PORT);
             System.out.println("Connected to server.");
         } catch (IOException e) {
             System.err.println("Error establishing connection to server.");
             e.printStackTrace();
-            return; // Exit if connection fails
+            return; //exits if connection fails
         }
     }
 
-    // Utility method for setting up input & output streams
+    //setup input and output for client
     private static void setStreams() {
         try {
-            in = new BufferedReader(new InputStreamReader(link.getInputStream())); // Step 2.
-            out = new PrintWriter(link.getOutputStream(), true); // Step 2.
+            in = new BufferedReader(new InputStreamReader(link.getInputStream()));
+            out = new PrintWriter(link.getOutputStream(), true);
             userEntry = new BufferedReader(new InputStreamReader(System.in));
         } catch (IOException e) {
             System.err.println("Error setting up streams.");
@@ -81,74 +81,41 @@ public class Homepage extends Application {
         }
     }
 
-    // Utility method for sending message
-    private static void sendMessage() {
-        try {
-            System.out.println("Enter message to be sent to server: ");
-            String message = userEntry.readLine();
-            out.println(message); // Step 3.
-
-            String response = in.readLine(); // Step 3.
-            System.out.println("\nSERVER RESPONSE> " + response);
-        } catch (IOException e) {
-            System.err.println("Error during communication with server.");
-            e.printStackTrace();
-        } finally {
-            closeResources(link, in, out, userEntry);
-        }
-    }
-
-    public static void sendButtonMessage() {
-        //out.println("x-thing added!");
-
-        // sending message to server to request array
-        out.println("fetchMessages");
-
-
-        // getting response from server
-        try {
-            String input = in.readLine();
-            System.out.println(input);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     @Override
     public void start(Stage stage) throws Exception {
-        // Connect to the server and set up streams
+        //connect to server and set up input & output
         getAddress();
         serverConnect();
         setStreams();
 
-        // Setting up children
+        //GUI header and buttons
         Label label = new Label("Would you like to...");
         Button view = new Button("View Timetable");
         Button add = new Button("Edit Timetable");
         Button board = new Button("View Message Board");
         Button post = new Button("Post a message");
 
-
-        // Setting up stage and scene
+        //creating stage, scene, width and height
+        //used in other windows to keep consistent
         stage.setTitle("Homepage");
         VBox box = new VBox();
         box.setAlignment(Pos.CENTER);
         box.setSpacing(10);
         box.getChildren().addAll(label, view, add, board, post);
-        Scene homeScene = new Scene(box, Client.WIDTH, Client.HEIGHT); // Replace with actual width and height if Client.WIDTH and Client.HEIGHT are not defined
+        Scene homeScene = new Scene(box, Client.WIDTH, Client.HEIGHT);
         stage.setScene(homeScene);
         stage.show();
 
-        // Initialize handlers with stage, homeScene, in, and out
+        //handlers that take the window information
         EditTimetableButtonHandler editTimetableHandler = new EditTimetableButtonHandler(stage, homeScene, in, out);
         ViewButtonHandler viewButtonHandler = new ViewButtonHandler(stage, homeScene, in, out);
         MessageBoardButtonHandler messageBoardButtonHandler = new MessageBoardButtonHandler(stage, homeScene, in, out);
+        PostMessageButtonHandler postMessageButtonHandler = new PostMessageButtonHandler(stage, homeScene, in, out);
 
-        // Set handlers for buttons
+        //button handlers
         add.setOnAction(editTimetableHandler);
         view.setOnAction(viewButtonHandler);
         board.setOnAction(messageBoardButtonHandler);
-
-        // Setting up event handler for send button
+        post.setOnAction(postMessageButtonHandler);
     }
 }

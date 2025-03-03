@@ -13,12 +13,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class MessageBoardButtonHandler implements EventHandler<ActionEvent> {
-    private Stage stage; // Existing stage
-    private Scene homeScene; // Homepage scene
-    private BufferedReader in; // Input stream from server
-    private PrintWriter out; // Output stream to server
 
+public class MessageBoardButtonHandler implements EventHandler<ActionEvent> {
+    private Stage stage;
+    private Scene homeScene;
+    private BufferedReader in;
+    private PrintWriter out;
+
+    //default constructor
     public MessageBoardButtonHandler(Stage stage, Scene homeScene, BufferedReader in, PrintWriter out) {
         this.stage = stage;
         this.homeScene = homeScene;
@@ -28,31 +30,31 @@ public class MessageBoardButtonHandler implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent actionEvent) {
-        // Request messages from the server
+        //request messages array from server
         out.println("fetchMessages");
 
         try {
-            // Read the messages from the server
+            //read the messages array
             String response = in.readLine();
             if (response != null) {
                 String[] messages = response.split(",");
 
-                // Create a new scene to display the messages
+                //create a new display to view the messages in the messages array
                 VBox messageBox = new VBox(10);
                 messageBox.setAlignment(Pos.CENTER);
 
-                // Add each message to the VBox
+                //add the messages to the new display
                 for (String message : messages) {
                     Label messageLabel = new Label(message);
                     messageBox.getChildren().add(messageLabel);
                 }
 
-                // Add a back button
+                //include the back button to go to homepage
                 Button backButton = new Button("Go Back");
                 backButton.setOnAction(event -> stage.setScene(homeScene));
                 messageBox.getChildren().add(backButton);
 
-                // Create and set the new scene
+                //new scene info
                 Scene messageScene = new Scene(messageBox, Client.WIDTH, Client.HEIGHT);
                 stage.setScene(messageScene);
                 stage.setTitle("Message Board");
