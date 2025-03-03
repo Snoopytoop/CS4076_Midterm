@@ -24,6 +24,9 @@ public class Server {
         // Initial test values
         lectures[0][0] = new Lecture("Programming", "FB-028");
         lectures[3][4] = new Lecture("Maths", "FB-029");
+        messages.add("this is a test message");
+        messages.add("this is another test message");
+        messages.add("last test message");
 
         try {
             serverSocket = new ServerSocket(1234);
@@ -84,6 +87,7 @@ public class Server {
                     }
                     // Condition to fetch all messages from the message board
                     else if (message.split(",")[0].equals("fetchMessages")) {
+                        System.out.println("Sending Messages to client");
                         String allMessages = String.join(",", messages); // Convert list to a single string
                         out.println(allMessages); // Send the messages to the client
                     }

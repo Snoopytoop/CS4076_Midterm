@@ -102,7 +102,8 @@ public class Homepage extends Application {
         //out.println("x-thing added!");
 
         // sending message to server to request array
-        out.println("arrayRequest");
+        out.println("fetchMessages");
+
 
         // getting response from server
         try {
@@ -125,7 +126,7 @@ public class Homepage extends Application {
         Button view = new Button("View Timetable");
         Button add = new Button("Edit Timetable");
         Button board = new Button("View Message Board");
-        Button send = new Button("Send a message");
+        Button post = new Button("Post a message");
 
 
         // Setting up stage and scene
@@ -133,7 +134,7 @@ public class Homepage extends Application {
         VBox box = new VBox();
         box.setAlignment(Pos.CENTER);
         box.setSpacing(10);
-        box.getChildren().addAll(label, view, add, board, send);
+        box.getChildren().addAll(label, view, add, board, post);
         Scene homeScene = new Scene(box, Client.WIDTH, Client.HEIGHT); // Replace with actual width and height if Client.WIDTH and Client.HEIGHT are not defined
         stage.setScene(homeScene);
         stage.show();
@@ -149,6 +150,5 @@ public class Homepage extends Application {
         board.setOnAction(messageBoardButtonHandler);
 
         // Setting up event handler for send button
-        send.setOnAction(event -> sendButtonMessage());
     }
 }
