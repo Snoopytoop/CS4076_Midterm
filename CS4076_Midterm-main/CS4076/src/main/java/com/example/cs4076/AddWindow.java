@@ -1,6 +1,5 @@
-package com.example.cs4076;
+package org.example.cs4076;
 
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -46,7 +45,7 @@ public class AddWindow {
             out.println(message);
 
             if (selection1 != null && selection2 != null) {
-                System.out.println("Selected: " + selection1 + " - " + selection2);
+                System.out.println("Selected: " + selection1 + " - " + selection2 + " - " + position);
                 //close the window once selections have been picked
                 window.close();
 

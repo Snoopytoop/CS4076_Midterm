@@ -1,4 +1,4 @@
-package com.example.cs4076;
+package org.example.cs4076;
 
 import java.io.*;
 import java.net.ServerSocket;

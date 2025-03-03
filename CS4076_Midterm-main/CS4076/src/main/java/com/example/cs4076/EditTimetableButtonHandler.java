@@ -1,5 +1,6 @@
-package com.example.cs4076;
+package org.example.cs4076;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -11,19 +12,50 @@ import javafx.stage.Stage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class EditTimetableButtonHandler implements EventHandler<ActionEvent> {
     private Stage stage; // Existing stage
     private Scene homeScene; // Homepage scene
     private BufferedReader in; // Input stream from server
     private PrintWriter out; // Output stream to server
+    private ExecutorService executorService; // Executor for managing background tasks
 
     public EditTimetableButtonHandler(Stage stage, Scene homeScene, BufferedReader in, PrintWriter out) {
         this.stage = stage;
         this.homeScene = homeScene;
         this.in = in;
         this.out = out;
+        this.executorService = Executors.newSingleThreadExecutor(); // Executor for handling background reads
+    }
+
+    // Method to continuously check for updates in the BufferedReader without blocking the main thread
+    public void checkForUpdates() {
+        // Run the background task on a separate thread
+        executorService.submit(() -> {
+            try {
+                while (true) {
+                    // Use the BufferedReader to read data asynchronously without blocking
+                    if (in.ready()) {  // Non-blocking check if data is available
+                        String line = in.readLine(); // Only read if data is available
+                        if (line != null && !line.isEmpty()) {
+                            // New data received. Notify the UI thread to refresh.
+                            Platform.runLater(() -> {
+                                handle(new ActionEvent()); // Call the handle() method to update the timetable
+                            });
+                        }
+                    }
+                    Thread.sleep(50); // Sleep briefly to avoid overloading the CPU with constant checking
+                }
+            } catch (IOException | InterruptedException e) {
+                System.err.println("Error while listening for updates from server.");
+                e.printStackTrace();
+            }
+        });
     }
 
     @Override
@@ -61,7 +93,7 @@ public class EditTimetableButtonHandler implements EventHandler<ActionEvent> {
         VBox.setVgrow(timetable.getGridPane(), Priority.ALWAYS);
 
         // Create the view schedule scene
-        Scene viewScene = new Scene(vbox, Client.WIDTH, Client.HEIGHT); // Replace with actual width and height if Client.WIDTH and Client.HEIGHT are not defined
+        Scene viewScene = new Scene(vbox, Client.WIDTH, Client.HEIGHT);
 
         // Set the view scene to the existing stage
         stage.setScene(viewScene);

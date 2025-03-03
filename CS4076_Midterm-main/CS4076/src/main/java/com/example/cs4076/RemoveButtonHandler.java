@@ -1,11 +1,10 @@
-package com.example.cs4076;
+package org.example.cs4076;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -13,7 +12,6 @@ import javafx.stage.Stage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
 
 public class RemoveButtonHandler implements EventHandler<ActionEvent> {
     private  Stage stage;

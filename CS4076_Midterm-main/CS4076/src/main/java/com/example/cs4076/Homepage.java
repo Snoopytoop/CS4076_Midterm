@@ -1,4 +1,4 @@
-package com.example.cs4076;
+package org.example.cs4076;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -108,6 +108,9 @@ public class Homepage extends Application {
 
         //handlers that take the window information
         EditTimetableButtonHandler editTimetableHandler = new EditTimetableButtonHandler(stage, homeScene, in, out);
+        editTimetableHandler.checkForUpdates();
+
+
         ViewButtonHandler viewButtonHandler = new ViewButtonHandler(stage, homeScene, in, out);
         MessageBoardButtonHandler messageBoardButtonHandler = new MessageBoardButtonHandler(stage, homeScene, in, out);
         PostMessageButtonHandler postMessageButtonHandler = new PostMessageButtonHandler(stage, homeScene, in, out);

@@ -1,4 +1,4 @@
-package com.example.cs4076;
+package org.example.cs4076;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -112,6 +112,8 @@ public class Timetable {
                         removeButtonHandler.handle(null);
                     });
 
+                    System.out.println("button added at " + index);
+
                 } else {
                     button = new Button(" ");
                     button.setStyle("-fx-background-color: #ccffda;" +
@@ -144,7 +146,7 @@ public class Timetable {
 
         for (int i = 0; i < TIMES.length; i++) {
             for (int j = 0; j < DAYS.length; j++) {
-                int index = j * TIMES.length + i; // Swapped indexing
+                int index = i * DAYS.length + j + 1; // Swapped indexing
                 if (index < scheduleArray.length && "null".equals(scheduleArray[index])) {
                     Button slotButton = new Button("Choose this slot");
                     slotButton.setStyle(

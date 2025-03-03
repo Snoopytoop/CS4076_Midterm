@@ -1,11 +1,10 @@
-package com.example.cs4076;
+package org.example.cs4076;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -46,7 +45,7 @@ public class AddButtonHandler implements EventHandler<ActionEvent> {
         }
 
         // Create a timetable and populate it with lecture data
-        Timetable timetable = new Timetable();
+        Timetable timetable = new Timetable(out, stage, homeScene, in);
         timetable.populateGrid(scheduleArray);
 
         // Create the back button
