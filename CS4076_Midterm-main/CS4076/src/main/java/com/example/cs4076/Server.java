@@ -71,6 +71,7 @@ public class Server {
                         String[] arrParts = message.split(",")[1].split("-");
                         String subject = arrParts[0];
                         String room = arrParts[1];
+                        System.out.println("room: " + room);
                         int row = Integer.parseInt(arrParts[2]);
                         int col = Integer.parseInt(arrParts[3]);
 

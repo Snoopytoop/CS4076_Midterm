@@ -68,7 +68,9 @@ public class EditTimetableButtonHandler implements EventHandler<ActionEvent> {
         try {
             String response = in.readLine();
             if (response != null) {
-                scheduleArray = response.split(","); // Assuming the server sends the array as a comma-separated string
+                scheduleArray = response.split(",");// Assuming the server sends the array as a comma-separated string
+
+                System.out.println("response: " + response);
             }
         } catch (IOException e) {
             System.err.println("Error reading array from server.");

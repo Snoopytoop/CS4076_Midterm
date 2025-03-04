@@ -29,7 +29,7 @@ public class AddWindow {
 
         //the dropdown menus
         ComboBox<String> subject = new ComboBox<>();
-        subject.getItems().addAll("Discrete Maths", "Programming", "Computer Hardware", "DSA", "Computer Graphics");
+        subject.getItems().addAll("Maths", "Programming", "OS", "DSA", "Graphics");
         subject.setPromptText("Select Module");
 
         ComboBox<String> room = new ComboBox<>();
@@ -43,6 +43,7 @@ public class AddWindow {
             String selection2 = room.getValue();
             String message = "add,"+selection1+"-"+selection2+"-"+position;
             out.println(message);
+            System.out.println(message);
 
             if (selection1 != null && selection2 != null) {
                 System.out.println("Selected: " + selection1 + " - " + selection2 + " - " + position);
