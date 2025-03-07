@@ -1,8 +1,7 @@
-package org.example.javafx;
+package org.example.midtermproject;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,141 +15,151 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Homepage extends Application {
-
-    // initialising IP address
     private static InetAddress IPAddress;
-    // setting port number
     private static int PORT = 1234;
-    // initialising Socket
     private static Socket link = null;
-    // initialising BufferedReaders
     private static BufferedReader in = null;
-    private static BufferedReader userEntry = null;
-    // initialising Printwriter
     private static PrintWriter out = null;
 
-    // Utility method for closing resources
-    private static void closeResources(Socket socket, BufferedReader in, PrintWriter out, BufferedReader userEntry) {
+    private ExecutorService executorService; // Shared executor service for background tasks
+
+    private static void closeResources() {
         try {
             if (in != null) in.close();
             if (out != null) out.close();
-            if (userEntry != null) userEntry.close();
-            if (socket != null) socket.close();
+            if (link != null) link.close();
         } catch (IOException e) {
             System.err.println("Error closing resources.");
             e.printStackTrace();
         }
     }
 
-    // Utility method for getting IP address of local host
     private static void getAddress() {
         try {
-            // setting IP address to address of local host
             IPAddress = InetAddress.getLocalHost();
-        }
-        // catching exception if host not found
-        catch (UnknownHostException e) {
+        } catch (UnknownHostException e) {
             System.out.println("Host ID not found!");
             System.exit(1);
         }
     }
 
-    // Utility method for connecting to server
     private static void serverConnect() {
         try {
-            link = new Socket(IPAddress, PORT); // Step 1.
+            link = new Socket(IPAddress, PORT);
             System.out.println("Connected to server.");
         } catch (IOException e) {
             System.err.println("Error establishing connection to server.");
             e.printStackTrace();
-            return; // Exit if connection fails
-        }
-    }
-
-    // Utility method for setting up input & output streams
-    private static void setStreams() {
-        try {
-            in = new BufferedReader(new InputStreamReader(link.getInputStream())); // Step 2.
-            out = new PrintWriter(link.getOutputStream(), true); // Step 2.
-            userEntry = new BufferedReader(new InputStreamReader(System.in));
-        } catch (IOException e) {
-            System.err.println("Error setting up streams.");
-            e.printStackTrace();
-            closeResources(link, in, out, userEntry);
             return;
         }
     }
 
-    // Utility method for sending message
-    private static void sendMessage() {
+    private static void setStreams() {
         try {
-            System.out.println("Enter message to be sent to server: ");
-            String message = userEntry.readLine();
-            out.println(message); // Step 3.
-
-            String response = in.readLine(); // Step 3.
-            System.out.println("\nSERVER RESPONSE> " + response);
+            in = new BufferedReader(new InputStreamReader(link.getInputStream()));
+            out = new PrintWriter(link.getOutputStream(), true);
         } catch (IOException e) {
-            System.err.println("Error during communication with server.");
+            System.err.println("Error setting up streams.");
             e.printStackTrace();
-        } finally {
-            closeResources(link, in, out, userEntry);
+            closeResources();
         }
     }
 
-    public static void sendButtonMessage() {
-        //out.println("x-thing added!");
+    // A single method that both checks for updates and checks for the TERMINATE message
+    public void checkForMessagesAndUpdates(EditTimetableButtonHandler editTimetableButtonHandler) {
+        executorService.submit(() -> {
+            try {
+                while (!Thread.currentThread().isInterrupted()) {
+                    if (in.ready()) {
+                        String message = in.readLine();
+                        if ("TERMINATE".equals(message)) {
+                            // TERMINATE received, stop the program
+                            Platform.runLater(() -> {
+                                editTimetableButtonHandler.shutdownExecutor();
+                                executorService.shutdownNow();
+                                Platform.exit();
+                                System.exit(0);
+                            });
+                            return;  // Exit the loop and stop the program
+                        } else if (message != null && !message.isEmpty()) {
+                            // Update received, notify UI to refresh
+                            Platform.runLater(() -> editTimetableButtonHandler.handleUpdate(message));
+                        }
+                    }
+                    Thread.sleep(50); // Sleep to avoid excessive CPU usage
+                }
+            } catch (IOException | InterruptedException e) {
+                System.err.println("Error while checking for messages or updates.");
+            }
+        });
+    }
 
-        // sending message to server to request array
-        out.println("arrayRequest");
-
-        // getting response from server
+    // Method to handle incorrect actions and display an error message
+    private void handleIncorrectAction() {
         try {
-            String input = in.readLine();
-            System.out.println(input);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new IncorrectActionException("Error! Incorrect action!");
+        } catch (IncorrectActionException ex) {
+            Platform.runLater(() -> showErrorPopup(ex.getMessage())); // Show error message in a popup
+            out.println(ex.getMessage()); // Send the error message to the server or log it
         }
     }
 
+    // Method to create and display the error popup
+    private void showErrorPopup(String message) {
+        Label errorLabel = new Label(message);
+        Stage errorStage = new Stage();
+        VBox errorBox = new VBox(errorLabel);
+        errorBox.setAlignment(Pos.CENTER);
+        Scene errorScene = new Scene(errorBox, 300, 100);
+        errorStage.setScene(errorScene);
+        errorStage.setTitle("Error");
+        errorStage.show();
+    }
 
     @Override
-    public void start(Stage stage) throws Exception {
-        // Connect to the server and set up streams
-        getAddress();
-        serverConnect();
-        setStreams();
+    public void start(Stage stage) {
+            getAddress();
+            serverConnect();
+            setStreams();
 
-        // Setting up children
-        Label label = new Label("Would you like to...");
-        Button add = new Button("Add a lecture");
-        Button remove = new Button("Remove a lecture");
-        Button view = new Button("View schedule");
-        Button send = new Button("Send a message");
+            executorService = Executors.newSingleThreadExecutor(); // Use single thread executor for background tasks
 
-        // Setting up stage and scene
-        stage.setTitle("Homepage");
-        VBox box = new VBox();
-        box.setAlignment(Pos.CENTER);
-        box.setSpacing(10);
-        box.getChildren().addAll(label, add, remove, view, send);
-        Scene homeScene = new Scene(box, Client.WIDTH, Client.HEIGHT); // Homepage scene
-        stage.setScene(homeScene);
-        stage.show();
+            Label label = new Label("Would you like to...");
+            Button view = new Button("View Timetable");
+            Button add = new Button("Edit Timetable");
+            Button board = new Button("View Message Board");
+            Button post = new Button("Post a message");
+            Button throwException = new Button("Throw exception");
+            Button stop = new Button("STOP");
 
-        // Initialize handlers with stage, homeScene, in, and out
-        AddButtonHandler addButtonHandler = new AddButtonHandler(stage, homeScene, in, out);
-        RemoveButtonHandler removeButtonHandler = new RemoveButtonHandler(stage, homeScene, in, out);
-        ViewButtonHandler viewButtonHandler = new ViewButtonHandler(stage, homeScene, in, out);
+            VBox box = new VBox();
+            box.setAlignment(Pos.CENTER);
+            box.setSpacing(10);
+            box.getChildren().addAll(label, view, add, board, post, throwException, stop);
+            Scene homeScene = new Scene(box, Client.WIDTH, Client.HEIGHT);
+            stage.setScene(homeScene);
+            stage.show();
 
-        // Set handlers for buttons
-        add.setOnAction(addButtonHandler);
-        remove.setOnAction(removeButtonHandler);
-        view.setOnAction(viewButtonHandler);
+            EditTimetableButtonHandler editTimetableHandler = new EditTimetableButtonHandler(stage, homeScene, in, out, executorService);
 
-        // Setting up event handler for send button
-        send.setOnAction(event -> sendButtonMessage());
+            ViewButtonHandler viewButtonHandler = new ViewButtonHandler(stage, homeScene, in, out);
+            MessageBoardButtonHandler messageBoardButtonHandler = new MessageBoardButtonHandler(stage, homeScene, in, out);
+            PostMessageButtonHandler postMessageButtonHandler = new PostMessageButtonHandler(stage, homeScene, in, out);
+
+            add.setOnAction(editTimetableHandler);
+            view.setOnAction(viewButtonHandler);
+            board.setOnAction(messageBoardButtonHandler);
+            post.setOnAction(postMessageButtonHandler);
+            throwException.setOnAction(e -> handleIncorrectAction());
+            stop.setOnAction(e -> out.println("STOP"));
+
+            checkForMessagesAndUpdates(editTimetableHandler); // Start checking for both updates and TERMINATE signal
+
+
     }
+
 }

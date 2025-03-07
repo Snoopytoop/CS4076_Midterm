@@ -1,11 +1,10 @@
-package org.example.javafx;
+package org.example.midtermproject;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -15,10 +14,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class AddButtonHandler implements EventHandler<ActionEvent> {
-    private  Stage stage; // Existing stage
-    private  Scene homeScene; // Homepage scene
-    private  BufferedReader in; // Input stream from server
-    private  PrintWriter out; // Output stream to server
+    private final Stage stage; // Existing stage
+    private final Scene homeScene; // Homepage scene
+    private final BufferedReader in; // Input stream from server
+    private final PrintWriter out; // Output stream to server
 
     public AddButtonHandler(Stage stage, Scene homeScene, BufferedReader in, PrintWriter out) {
         this.stage = stage;

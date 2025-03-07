@@ -1,6 +1,5 @@
-package org.example.javafx;
+package org.example.midtermproject;
 
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,45 +20,48 @@ public class AddWindow {
     }
 
     public void showWindow(Stage parentStage) {
-        // Create a new stage (window)
+        //create stage
         Stage window = new Stage();
-        window.initModality(Modality.APPLICATION_MODAL); // Blocks interaction with other windows
+        //can't interact with other windows
+        window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Add Lecture");
         window.setMinWidth(300);
 
-        // Create dropdown menus
+        //the dropdown menus
         ComboBox<String> subject = new ComboBox<>();
-        subject.getItems().addAll("Discrete Maths", "Programming", "Computer Hardware", "DSA", "Computer Graphics");
+        subject.getItems().addAll("Maths", "Programming", "OS", "DSA", "Graphics");
         subject.setPromptText("Select Module");
 
         ComboBox<String> room = new ComboBox<>();
         room.getItems().addAll("Room 1", "Room 2", "Room 3", "Room 4", "Room 5", "Room 6");
         room.setPromptText("Select Room");
 
-        // Create a button
+        //button
         Button confirmButton = new Button("Confirm");
         confirmButton.setOnAction(event -> {
             String selection1 = subject.getValue();
             String selection2 = room.getValue();
             String message = "add,"+selection1+"-"+selection2+"-"+position;
             out.println(message);
+            System.out.println(message);
 
             if (selection1 != null && selection2 != null) {
-                System.out.println("Selected: " + selection1 + " - " + selection2);
-                window.close(); // Close the window after selection
+                System.out.println("Selected: " + selection1 + " - " + selection2 + " - " + position);
+                //close the window once selections have been picked
+                window.close();
+
             }
         });
 
-        // Layout (VBox)
+        //vbos setup
         VBox layout = new VBox(10);
         layout.setPadding(new Insets(20));
         layout.getChildren().addAll(subject, room, confirmButton);
 
-        // Scene setup
+        //scene setup
         Scene scene = new Scene(layout);
         window.setScene(scene);
-
-        // Show the window
+        //keep window up until finished
         window.showAndWait();
     }
 }

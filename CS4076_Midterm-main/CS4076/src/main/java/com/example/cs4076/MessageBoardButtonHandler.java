@@ -1,4 +1,4 @@
-package org.example.cs4076;
+package org.example.midtermproject;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -37,7 +37,7 @@ public class MessageBoardButtonHandler implements EventHandler<ActionEvent> {
             //read the messages array
             String response = in.readLine();
             if (response != null) {
-                String[] messages = response.split(",");
+                String[] messages = response.split("&&");
 
                 //create a new display to view the messages in the messages array
                 VBox messageBox = new VBox(10);

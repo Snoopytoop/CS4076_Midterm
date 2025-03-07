@@ -1,4 +1,4 @@
-package org.example.javafx;
+package org.example.midtermproject;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

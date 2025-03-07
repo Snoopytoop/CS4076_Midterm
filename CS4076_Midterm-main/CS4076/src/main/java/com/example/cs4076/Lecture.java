@@ -1,4 +1,4 @@
-package org.example.javafx;
+package org.example.midtermproject;
 
 public class Lecture {
     private final String name;
