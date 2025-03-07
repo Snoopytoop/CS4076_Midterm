@@ -5,36 +5,73 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class RemoveButtonHandler implements EventHandler<ActionEvent> {
-    private final Stage stage; // Existing stage
-    private final Scene homeScene; // Homepage scene
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 
-    public RemoveButtonHandler(Stage stage, Scene homeScene) {
+public class RemoveButtonHandler implements EventHandler<ActionEvent> {
+    private  Stage stage;
+    private  Scene homeScene;
+    private  BufferedReader in;
+    private  PrintWriter out;
+
+    //default constructor
+    public RemoveButtonHandler(Stage stage, Scene homeScene, BufferedReader in, PrintWriter out) {
         this.stage = stage;
         this.homeScene = homeScene;
+        this.in = in;
+        this.out = out;
     }
 
     @Override
     public void handle(ActionEvent actionEvent) {
-        // Setting up scene for removing lectures
-        Label label = new Label("Page for removing lectures");
+        //request array from the server
+        out.println("arrayRequest");
+
+        //handle the array
+        String[] scheduleArray = null;
+        try {
+            String response = in.readLine();
+            if (response != null) {
+                //recieving array with "," seperating data pieces
+                scheduleArray = response.split(",");
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading array from server.");
+            e.printStackTrace();
+            return;
+        }
+
+        //create the timetable and add the saved data to it
+        Timetable timetable = new Timetable(out, stage, homeScene, in);
+        timetable.populateGrid(scheduleArray);
+
+        //add back button to homepage
         Button back = new Button("Go back");
-        VBox box = new VBox();
-        box.setAlignment(Pos.CENTER);
-        box.getChildren().addAll(label, back);
-        Scene removeScene = new Scene(box, Client.WIDTH, Client.HEIGHT); // Use WIDTH and HEIGHT
 
-        // Set the remove scene to the existing stage
-        stage.setScene(removeScene);
-        stage.setTitle("Remove a Lecture");
+        //Vbox
+        VBox vbox = new VBox();
+        vbox.setAlignment(Pos.CENTER);
+        vbox.setSpacing(10);
+        vbox.getChildren().addAll(back, timetable.getGridPane());
 
-        // Handle the back button
+        //Vbox will adjust dynamically
+        VBox.setVgrow(timetable.getGridPane(), Priority.ALWAYS);
+
+        //create the scene using predetermined width and height
+        Scene viewScene = new Scene(vbox, Client.WIDTH, Client.HEIGHT);
+
+        //change view to this stage
+        stage.setScene(viewScene);
+        stage.setTitle("View Schedule");
+
+        //back button handler
         back.setOnAction(event -> {
-            // Switch back to the homepage scene
+            //go back to homepage scene
             stage.setScene(homeScene);
             stage.setTitle("Homepage");
         });

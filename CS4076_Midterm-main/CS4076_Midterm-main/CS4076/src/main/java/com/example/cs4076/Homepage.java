@@ -1,10 +1,8 @@
 package com.example.cs4076;
 
 import javafx.application.Application;
-import javafx.scene.control.TextInputDialog;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -44,10 +42,10 @@ public class Homepage extends Application {
         }
     }
 
-    // Utility method for getting IP address of local host
+    // get local host IP address (server)
     private static void getAddress() {
         try {
-            // setting IP address to address of local host
+            //set ip to localhost ip
             IPAddress = InetAddress.getLocalHost();
         }
         // catching exception if host not found
@@ -57,23 +55,23 @@ public class Homepage extends Application {
         }
     }
 
-    // Utility method for connecting to server
+    //connect to server
     private static void serverConnect() {
         try {
-            link = new Socket(IPAddress, PORT); // Step 1.
+            link = new Socket(IPAddress, PORT);
             System.out.println("Connected to server.");
         } catch (IOException e) {
             System.err.println("Error establishing connection to server.");
             e.printStackTrace();
-            return; // Exit if connection fails
+            return; //exits if connection fails
         }
     }
 
-    // Utility method for setting up input & output streams
+    //setup input and output for client
     private static void setStreams() {
         try {
-            in = new BufferedReader(new InputStreamReader(link.getInputStream())); // Step 2.
-            out = new PrintWriter(link.getOutputStream(), true); // Step 2.
+            in = new BufferedReader(new InputStreamReader(link.getInputStream()));
+            out = new PrintWriter(link.getOutputStream(), true);
             userEntry = new BufferedReader(new InputStreamReader(System.in));
         } catch (IOException e) {
             System.err.println("Error setting up streams.");
@@ -83,92 +81,44 @@ public class Homepage extends Application {
         }
     }
 
-    private void sendMessage() {
-        // Create a dialog to get the message from the user
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Send Message");
-        dialog.setHeaderText(null);
-        dialog.setContentText("Enter your message:");
-
-        // Show the dialog and wait for user input
-        dialog.showAndWait().ifPresent(message -> {
-            try {
-                out.println("sendMessage," + message); // Send the message to the server
-                String response = in.readLine(); // Receive response from server
-                System.out.println(response); // Print server response (optional)
-            } catch (IOException e) {
-                e.printStackTrace();
-                // Show an error dialog if something goes wrong
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Failed to send message to the server.");
-                alert.showAndWait();
-            }
-        });
-    }
-
-
-    private void viewMessageBoard() {
-        try {
-            out.println("viewMessageBoard,"); // Send request to server
-            String response = in.readLine(); // Receive response from server
-
-            // Display the messages in a dialog box
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Message Board");
-            alert.setHeaderText(null);
-            alert.setContentText(response);
-            alert.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Show an error dialog if something goes wrong
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Failed to retrieve messages from the server.");
-            alert.showAndWait();
-        }
-    }
-
     @Override
     public void start(Stage stage) throws Exception {
-        // Connect to the server and set up streams
+        //connect to server and set up input & output
         getAddress();
         serverConnect();
         setStreams();
 
-        // Setting up children
+        //GUI header and buttons
         Label label = new Label("Would you like to...");
-        Button add = new Button("Add a lecture");
-        Button remove = new Button("Remove a lecture");
-        Button view = new Button("View schedule");
-        Button send = new Button("Send a message");
-        Button viewMessageBoardButton = new Button("View Message Board");
+        Button view = new Button("View Timetable");
+        Button add = new Button("Edit Timetable");
+        Button board = new Button("View Message Board");
+        Button post = new Button("Post a message");
 
-        // Setting up stage and scene
+        //creating stage, scene, width and height
+        //used in other windows to keep consistent
         stage.setTitle("Homepage");
         VBox box = new VBox();
         box.setAlignment(Pos.CENTER);
         box.setSpacing(10);
-        box.getChildren().addAll(label, add, remove, view, send, viewMessageBoardButton); // Add the new button here
-        Scene homeScene = new Scene(box, Client.WIDTH, Client.HEIGHT); // Homepage scene
+        box.getChildren().addAll(label, view, add, board, post);
+        Scene homeScene = new Scene(box, Client.WIDTH, Client.HEIGHT);
         stage.setScene(homeScene);
         stage.show();
 
-        // Initialize handlers with stage, homeScene, in, and out
-        AddButtonHandler addButtonHandler = new AddButtonHandler(stage, homeScene, in, out);
-        RemoveButtonHandler removeButtonHandler = new RemoveButtonHandler(stage, homeScene);
+        //handlers that take the window information
+        EditTimetableButtonHandler editTimetableHandler = new EditTimetableButtonHandler(stage, homeScene, in, out);
+        editTimetableHandler.checkForUpdates();
+
+
         ViewButtonHandler viewButtonHandler = new ViewButtonHandler(stage, homeScene, in, out);
-        MessageBoardHandler messageBoardHandler = new MessageBoardHandler(stage, homeScene, in, out); // New handler
+        MessageBoardButtonHandler messageBoardButtonHandler = new MessageBoardButtonHandler(stage, homeScene, in, out);
+        PostMessageButtonHandler postMessageButtonHandler = new PostMessageButtonHandler(stage, homeScene, in, out);
 
-        // Set handlers for buttons
-        add.setOnAction(addButtonHandler);
-        remove.setOnAction(removeButtonHandler);
+        //button handlers
+        add.setOnAction(editTimetableHandler);
         view.setOnAction(viewButtonHandler);
-        viewMessageBoardButton.setOnAction(messageBoardHandler); // Set action for the new button
-
-        // Setting up event handler for send button
-        send.setOnAction(event -> sendMessage());
+        board.setOnAction(messageBoardButtonHandler);
+        post.setOnAction(postMessageButtonHandler);
     }
 }

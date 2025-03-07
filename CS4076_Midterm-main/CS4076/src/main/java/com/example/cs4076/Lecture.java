@@ -1,4 +1,4 @@
-package org.example.cs4076;
+package org.example.javafx;
 
 public class Lecture {
     private final String name;

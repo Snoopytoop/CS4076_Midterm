@@ -1,10 +1,11 @@
-package org.example.cs4076;
+package org.example.javafx;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -12,14 +13,14 @@ import javafx.stage.Stage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 
 public class RemoveButtonHandler implements EventHandler<ActionEvent> {
-    private  Stage stage;
-    private  Scene homeScene;
-    private  BufferedReader in;
-    private  PrintWriter out;
+    private  Stage stage; // Existing stage
+    private  Scene homeScene; // Homepage scene
+    private  BufferedReader in; // Input stream from server
+    private  PrintWriter out; // Output stream to server
 
-    //default constructor
     public RemoveButtonHandler(Stage stage, Scene homeScene, BufferedReader in, PrintWriter out) {
         this.stage = stage;
         this.homeScene = homeScene;
@@ -29,16 +30,15 @@ public class RemoveButtonHandler implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent actionEvent) {
-        //request array from the server
-        out.println("arrayRequest");
+        // Send a request to the server to get the array
+        out.println("arrayRequest,blank");
 
-        //handle the array
+        // Retrieve the array from the server
         String[] scheduleArray = null;
         try {
             String response = in.readLine();
             if (response != null) {
-                //recieving array with "," seperating data pieces
-                scheduleArray = response.split(",");
+                scheduleArray = response.split(","); // Assuming the server sends the array as a comma-separated string
             }
         } catch (IOException e) {
             System.err.println("Error reading array from server.");
@@ -46,32 +46,32 @@ public class RemoveButtonHandler implements EventHandler<ActionEvent> {
             return;
         }
 
-        //create the timetable and add the saved data to it
+        // Create a timetable and populate it with lecture data
         Timetable timetable = new Timetable(out, stage, homeScene, in);
         timetable.populateGrid(scheduleArray);
 
-        //add back button to homepage
+        // Create the back button
         Button back = new Button("Go back");
 
-        //Vbox
+        // Create a VBox to hold the timetable and back button
         VBox vbox = new VBox();
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(10);
         vbox.getChildren().addAll(back, timetable.getGridPane());
 
-        //Vbox will adjust dynamically
+        // Make the VBox grow to fill the window
         VBox.setVgrow(timetable.getGridPane(), Priority.ALWAYS);
 
-        //create the scene using predetermined width and height
+        // Create the view schedule scene
         Scene viewScene = new Scene(vbox, Client.WIDTH, Client.HEIGHT);
 
-        //change view to this stage
+        // Set the view scene to the existing stage
         stage.setScene(viewScene);
         stage.setTitle("View Schedule");
 
-        //back button handler
+        // Handle the back button
         back.setOnAction(event -> {
-            //go back to homepage scene
+            // Switch back to the homepage scene
             stage.setScene(homeScene);
             stage.setTitle("Homepage");
         });
