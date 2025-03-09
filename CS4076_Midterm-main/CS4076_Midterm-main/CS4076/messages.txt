@@ -1,9 +1,0 @@
-this is a test message
-this is another test message
-last test message
-testing
-this is a test message
-this is another test message
-last test message
-this should stay here. 8 messages at this point
-test

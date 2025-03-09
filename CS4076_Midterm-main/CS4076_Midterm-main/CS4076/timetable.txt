@@ -1,5 +1,0 @@
-0,0,Programming,Room 2
-0,1,OS,Room 3
-1,0,Computer Hardware,Room 2
-3,0,Programming,Room 3
-3,4,DSA,Room 2
