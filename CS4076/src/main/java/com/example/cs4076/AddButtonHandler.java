@@ -14,10 +14,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class AddButtonHandler implements EventHandler<ActionEvent> {
-    private final Stage stage; // Existing stage
-    private final Scene homeScene; // Homepage scene
-    private final BufferedReader in; // Input stream from server
-    private final PrintWriter out; // Output stream to server
+    private final Stage stage; //existing stage
+    private final Scene homeScene; //homepage scene
+    private final BufferedReader in; //input stream from server
+    private final PrintWriter out; //output stream to server
 
     public AddButtonHandler(Stage stage, Scene homeScene, BufferedReader in, PrintWriter out) {
         this.stage = stage;
@@ -28,15 +28,15 @@ public class AddButtonHandler implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent actionEvent) {
-        // Send a request to the server to get the array
+        //request array from server
         out.println("arrayRequest");
 
-        // Retrieve the array from the server
+        //get array from server
         String[] scheduleArray = null;
         try {
             String response = in.readLine();
             if (response != null) {
-                scheduleArray = response.split(","); // Assuming the server sends the array as a comma-separated string
+                scheduleArray = response.split(","); //split response into parts
             }
         } catch (IOException e) {
             System.err.println("Error reading array from server.");
@@ -44,32 +44,32 @@ public class AddButtonHandler implements EventHandler<ActionEvent> {
             return;
         }
 
-        // Create a timetable and populate it with lecture data
+        //create timetable and fill it with data
         Timetable timetable = new Timetable(out, stage, homeScene, in);
         timetable.populateGrid(scheduleArray);
 
-        // Create the back button
+        //create back button
         Button back = new Button("Go back");
 
-        // Create a VBox to hold the timetable and back button
+        //vbox to hold timetable and back button
         VBox vbox = new VBox();
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(10);
         vbox.getChildren().addAll(back, timetable.getGridPane());
 
-        // Make the VBox grow to fill the window
+        //make vbox stretch to fill window
         VBox.setVgrow(timetable.getGridPane(), Priority.ALWAYS);
 
-        // Create the view schedule scene
+        //create view schedule scene
         Scene viewScene = new Scene(vbox, Client.WIDTH, Client.HEIGHT);
 
-        // Set the view scene to the existing stage
+        //set scene to stage
         stage.setScene(viewScene);
         stage.setTitle("View Schedule");
 
-        // Handle the back button
+        //handle back button
         back.setOnAction(event -> {
-            // Switch back to the homepage scene
+            //go back to homepage
             stage.setScene(homeScene);
             stage.setTitle("Homepage");
         });
