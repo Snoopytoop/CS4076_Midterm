@@ -1,0 +1,7 @@
+0,0,Programming,Room 5
+0,1,Maths,Room 2
+0,3,Graphics,Room 4
+0,4,Maths,Room 1
+1,0,Maths,Room 6
+1,3,Graphics,Room 4
+2,3,OS,Room 1
