@@ -1,4 +1,0 @@
-hello
-this is a test message
-Mondays programming lecture at 9 on Monday will be cancelled this week
-Another test
