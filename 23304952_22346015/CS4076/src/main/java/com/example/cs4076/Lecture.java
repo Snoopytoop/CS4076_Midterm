@@ -1,5 +1,5 @@
 package com.example.cs4076;
-
+//create lecture object
 public class Lecture {
     private final String name;
     private final String room;

@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-
+//remove a lecture
 public class RemoveButtonHandler implements EventHandler<ActionEvent> {
     private Stage stage; //existing stage
     private Scene homeScene; //homepage scene

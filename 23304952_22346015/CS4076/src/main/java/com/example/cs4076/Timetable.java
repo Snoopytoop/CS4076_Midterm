@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-
+//make timetable layout
 public class Timetable {
     private final GridPane gridPane; //grid for timetable
     private final PrintWriter out; //output stream to server

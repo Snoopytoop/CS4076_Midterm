@@ -14,20 +14,24 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.concurrent.ExecutorService;
-
+//requests timetable data from server when clicked
 public class EditTimetableButtonHandler implements EventHandler<ActionEvent> {
     private Stage stage; //existing stage
     private Scene homeScene; //homepage scene
     private BufferedReader in; //input stream from server
     private PrintWriter out; //output stream to server
     private ExecutorService executorService; //shared executor service
+    private Homepage homepage; //reference to homepage for button styling
 
-    public EditTimetableButtonHandler(Stage stage, Scene homeScene, BufferedReader in, PrintWriter out, ExecutorService executorService) {
+    public EditTimetableButtonHandler(Stage stage, Scene homeScene, BufferedReader in,
+                                      PrintWriter out, ExecutorService executorService,
+                                      Homepage homepage) {
         this.stage = stage;
         this.homeScene = homeScene;
         this.in = in;
         this.out = out;
         this.executorService = executorService;
+        this.homepage = homepage; //store homepage reference
     }
 
     public void handleUpdate(String message) {
@@ -63,15 +67,21 @@ public class EditTimetableButtonHandler implements EventHandler<ActionEvent> {
         Timetable timetable = new Timetable(out, stage, homeScene, in);
         timetable.populateGrid(scheduleArray);
 
-        //create back button
-        BackButtonHandler backButtonHandler = new BackButtonHandler(stage, homeScene);
-        Button backButton = backButtonHandler.createStyledBackButton();
+        //create early timetable button using homepage's styling
+        Button earlyTimetableButton = homepage.createStyledButton("Early Timetable", "#00BCD4");
+        EarlyLecture earlyLectureHandler = new EarlyLecture(stage, homeScene, in, out,
+                executorService, timetable, homepage);
+        earlyTimetableButton.setOnAction(earlyLectureHandler);
 
-        //vbox to hold back button and timetable
+        //create back button using homepage's styling
+        Button backButton = homepage.createStyledButton("Back", "#607D8B");
+        backButton.setOnAction(new BackButtonHandler(stage, homeScene));
+
+        //vbox to hold buttons and timetable
         VBox vbox = new VBox();
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(10);
-        vbox.getChildren().addAll(backButton, timetable.getGridPane());
+        vbox.getChildren().addAll(earlyTimetableButton, backButton, timetable.getGridPane());
 
         //make the gridPane stretch to fill the window
         VBox.setVgrow(timetable.getGridPane(), Priority.ALWAYS);

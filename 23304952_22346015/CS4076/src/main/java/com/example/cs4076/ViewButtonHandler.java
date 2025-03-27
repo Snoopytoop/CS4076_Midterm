@@ -13,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+//new window to display uneditable timetable
 public class ViewButtonHandler implements EventHandler<ActionEvent> {
     private Stage stage; //existing stage
     private Scene homeScene; //homepage scene

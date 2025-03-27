@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 
 import java.io.PrintWriter;
 
+//create dro down menus for adding lectures and rooms
 public class AddWindow {
     private final PrintWriter out;
     private String position;

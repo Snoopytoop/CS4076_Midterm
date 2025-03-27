@@ -158,8 +158,7 @@ public class Homepage extends Application {
         stage.setTitle("Homepage");
         stage.show();
 
-        EditTimetableButtonHandler editTimetableHandler = new EditTimetableButtonHandler(stage, homeScene, in, out, executorService);
-
+        EditTimetableButtonHandler editTimetableHandler = new EditTimetableButtonHandler(stage, homeScene, in, out, executorService, this);
         ViewButtonHandler viewButtonHandler = new ViewButtonHandler(stage, homeScene, in, out);
         MessageBoardButtonHandler messageBoardButtonHandler = new MessageBoardButtonHandler(stage, homeScene, in, out);
         PostMessageButtonHandler postMessageButtonHandler = new PostMessageButtonHandler(stage, homeScene, in, out);
@@ -175,7 +174,7 @@ public class Homepage extends Application {
     }
 
     //create buttons
-    private Button createStyledButton(String text, String color) {
+    Button createStyledButton(String text, String color) {
         Button button = new Button(text);
         button.setStyle(
                 "-fx-background-color: " + color + ";" +

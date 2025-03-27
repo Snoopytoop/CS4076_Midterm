@@ -5,7 +5,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-
+//back button to take user to homepage
 public class BackButtonHandler implements EventHandler<ActionEvent> {
     private Stage stage; //stage to switch back from
     private Scene homeScene; //homepage scene to return to

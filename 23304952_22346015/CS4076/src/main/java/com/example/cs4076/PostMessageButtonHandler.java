@@ -14,7 +14,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Optional;
-
+//post a message to the message board
 public class PostMessageButtonHandler implements EventHandler<ActionEvent> {
     private Stage stage; //existing stage
     private Scene homeScene; //homepage scene

@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-
+//shows the 8 most recent messages
 public class MessageBoardButtonHandler implements EventHandler<ActionEvent> {
     private Stage stage; //existing stage
     private Scene homeScene; //homepage scene

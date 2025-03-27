@@ -2,7 +2,7 @@ package com.example.cs4076;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-
+//calculate screen resolution
 public class ScreenResolution {
 
     //get screen width of computer

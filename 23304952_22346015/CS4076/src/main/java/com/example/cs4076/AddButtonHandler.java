@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-
+//add a lecture
 public class AddButtonHandler implements EventHandler<ActionEvent> {
     private final Stage stage; //existing stage
     private final Scene homeScene; //homepage scene
