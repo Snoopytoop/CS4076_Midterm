@@ -25,10 +25,10 @@ public class Server extends Application {
     private static final List<String> logBuffer = new ArrayList<>(); // Store logs before UI initializes
 
     public static void main(String[] args) {
-        // Start server in a background thread
+        //start server on its own thread
         new Thread(Server::setup).start();
 
-        // Start JavaFX application
+        //launch JavaFx
         launch(args);
     }
 
@@ -188,7 +188,7 @@ public class Server extends Application {
     }
 
     private static void optimizeTimetable() {
-        // Create a thread for each day
+        //make  anew thread for each day
         Thread[] dayThreads = new Thread[5];
 
         for (int day = 0; day < 5; day++) {
@@ -197,7 +197,7 @@ public class Server extends Application {
             dayThreads[day].start();
         }
 
-        // Wait for all threads to complete
+        //make sure all threads fnnish
         for (Thread thread : dayThreads) {
             try {
                 thread.join();
@@ -211,14 +211,14 @@ public class Server extends Application {
     }
 
     private static void optimizeDay(int day) {
-        // Process each time slot for this day
+        //go through each timeslot for that day
         for (int timeSlot = 0; timeSlot < 9; timeSlot++) {
             Lecture lecture = lectures[timeSlot][day];
             if (lecture != null) {
-                // Find earliest available slot for this lecture
+                //get earliest "null" slot
                 for (int earlierSlot = 0; earlierSlot < timeSlot; earlierSlot++) {
                     if (lectures[earlierSlot][day] == null) {
-                        // Move lecture to earlier slot
+                        //move the lecture to that null slot
                         lectures[earlierSlot][day] = lecture;
                         lectures[timeSlot][day] = null;
                         logMessage(String.format("Moved %s from %d-%d to %d-%d",
@@ -242,11 +242,12 @@ public class Server extends Application {
         logArea.setWrapText(true);
         logArea.setPrefHeight(200);
 
-        // Load buffered logs into UI
+        // put log into buffer
         for (String log : logBuffer) {
             logArea.appendText(log + "\n");
         }
-        logBuffer.clear(); // Clear buffer after loading
+        //wipe the buffer
+        logBuffer.clear();
 
         Button closeButton = new Button("Stop Server");
         closeButton.setOnAction(e -> {
@@ -270,7 +271,8 @@ public class Server extends Application {
         if (logArea != null) {
             Platform.runLater(() -> logArea.appendText(msg + "\n"));
         } else {
-            logBuffer.add(msg); // Store logs temporarily
+            //store the log
+            logBuffer.add(msg);
         }
     }
 }

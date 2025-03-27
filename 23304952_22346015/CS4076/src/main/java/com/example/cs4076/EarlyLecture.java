@@ -35,7 +35,7 @@ public class EarlyLecture implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent actionEvent) {
-        // Show confirmation dialog
+        //add confirmation window
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Early Timetable");
         alert.setHeaderText("Reschedule all lectures to earliest available slots?");
@@ -43,14 +43,14 @@ public class EarlyLecture implements EventHandler<ActionEvent> {
 
         alert.showAndWait().ifPresent(buttonResponse -> {
             if (buttonResponse == ButtonType.OK) {
-                // Send request to server to optimize timetable
+                //request timetable rearrangement
                 out.println("optimizeTimetable");
 
-                // Wait for server response
+                //let server respond
                 try {
                     String serverResponse = in.readLine();
                     if (serverResponse != null && serverResponse.equals("optimizationComplete")) {
-                        // Refresh the timetable display
+                        //refresh display
                         out.println("arrayRequest");
                         String updatedArray = in.readLine();
                         Platform.runLater(() -> {
