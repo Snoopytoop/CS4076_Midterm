@@ -1,4 +1,4 @@
-package com.example.cs4076;
+package org.example.midtermproject2;
 
 import javafx.geometry.Insets;
 import javafx.scene.Scene;

@@ -1,4 +1,4 @@
-package com.example.cs4076;
+package org.example.midtermproject2;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -47,19 +47,12 @@ public class Server extends Application {
 
     private static void accept() {
         while (true) {
-            try (Socket link = serverSocket.accept();
-                 BufferedReader in = new BufferedReader(new InputStreamReader(link.getInputStream()));
-                 PrintWriter out = new PrintWriter(link.getOutputStream(), true)) {
-
+            try {
+                Socket link = serverSocket.accept(); // Accept client connection
                 logMessage("Client connected: " + link.getInetAddress());
 
-                String message = in.readLine();
-                while (message != null) {
-                    handleClientMessage(message, out);
-                    message = in.readLine();
-                }
-
-                logMessage("Client disconnected: " + link.getInetAddress());
+                // Create and start a new thread for each client
+                new Thread(new ClientHandler(link)).start();
 
             } catch (IOException e) {
                 logMessage("Connection error: " + e.getMessage());
@@ -67,7 +60,7 @@ public class Server extends Application {
         }
     }
 
-    private static void handleClientMessage(String message, PrintWriter out) {
+    static void handleClientMessage(String message, PrintWriter out) {
         logMessage("Received message: " + message);
 
         if (message.startsWith("arrayRequest")) {
@@ -266,7 +259,7 @@ public class Server extends Application {
         stage.show();
     }
 
-    private static void logMessage(String msg) {
+    static void logMessage(String msg) {
         System.out.println(msg);
         if (logArea != null) {
             Platform.runLater(() -> logArea.appendText(msg + "\n"));
