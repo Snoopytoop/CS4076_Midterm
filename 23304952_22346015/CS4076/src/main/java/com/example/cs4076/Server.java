@@ -113,7 +113,7 @@ public class Server extends Application {
         return output.toString();
     }
 
-    private static void saveMessagesToFile() {
+    private static synchronized void saveMessagesToFile() {
         try (FileWriter writer = new FileWriter("messages.txt")) {
             for (String message : messages) {
                 writer.write(message + System.lineSeparator());
@@ -142,11 +142,26 @@ public class Server extends Application {
         }
     }
 
-    private static void saveTimetableToFile() {
-        try (FileWriter writer = new FileWriter("timetable.txt")) {
-            for (int i = 0; i < lectures.length; i++) {
-                for (int j = 0; j < lectures[i].length; j++) {
-                    if (lectures[i][j] != null) {
+    // TimeTable section
+
+    private static final Object lockTimetable = new Object();
+    private static boolean isWritingTimetable = false; // Flag to track if writing is in progress
+
+    private static synchronized void saveTimetableToFile() {
+        synchronized (lockTimetable) {
+            while (isWritingTimetable) { // Wait if another thread is already writing
+                try {
+                    lockTimetable.wait();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+            isWritingTimetable = true; // Mark that writing is in progress
+
+            try (FileWriter writer = new FileWriter("timetable.txt")) {
+                for (int i = 0; i < lectures.length; i++) {
+                    for (int j = 0; j < lectures[i].length; j++) {
+                        if (lectures[i][j] != null) {
                         writer.write(i + "," + j + "," + lectures[i][j].getName() + "," + lectures[i][j].getRoom() + System.lineSeparator());
                     }
                 }
@@ -154,29 +169,45 @@ public class Server extends Application {
             logMessage("Timetable saved to file.");
         } catch (IOException e) {
             logMessage("Error saving timetable to file: " + e.getMessage());
+        } finally {
+                isWritingTimetable = false; // Reset flag
+                lockTimetable.notifyAll(); // Notify waiting threads
+            }
         }
     }
 
     private static void loadTimetableFromFile() {
-        File file = new File("timetable.txt");
-        if (!file.exists()) {
-            logMessage("No existing timetable file found. Starting with an empty timetable.");
-            return;
-        }
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                int row = Integer.parseInt(parts[0]);
-                int col = Integer.parseInt(parts[1]);
-                String subject = parts[2];
-                String room = parts[3];
-                lectures[row][col] = new Lecture(subject, room);
+        synchronized (lockTimetable) {
+            while (isWritingTimetable) { // Wait if another thread is writing
+                try {
+                    lockTimetable.wait();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
             }
-            logMessage("Timetable loaded from file.");
-        } catch (IOException e) {
-            logMessage("Error loading timetable from file: " + e.getMessage());
+            // Reading is allowed while isWriting == false (multiple threads can read)
+            try {
+                File file = new File("timetable.txt");
+                if (!file.exists()) {
+                    logMessage("No existing timetable file found. Starting with an empty timetable.");
+                    return;
+                }
+
+                try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        String[] parts = line.split(",");
+                        int i = Integer.parseInt(parts[0]);
+                        int j = Integer.parseInt(parts[1]);
+                        lectures[i][j] = new Lecture(parts[2], parts[3]);
+                    }
+                    logMessage("Timetable loaded from file.");
+                }
+            } catch (IOException e) {
+                logMessage("Error loading timetable from file: " + e.getMessage());
+            } finally {
+                lockTimetable.notifyAll(); // Notify waiting threads
+            }
         }
     }
 
@@ -199,7 +230,6 @@ public class Server extends Application {
                 Thread.currentThread().interrupt();
             }
         }
-
         logMessage("Timetable optimization complete for all days");
     }
 
