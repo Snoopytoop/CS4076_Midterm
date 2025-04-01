@@ -113,32 +113,64 @@ public class Server extends Application {
         return output.toString();
     }
 
-    private static synchronized void saveMessagesToFile() {
-        try (FileWriter writer = new FileWriter("messages.txt")) {
-            for (String message : messages) {
-                writer.write(message + System.lineSeparator());
+    // Messages Section
+
+    private static final Object lockMessages = new Object();
+    private static boolean isWritingMessages = false;
+
+    private static void saveMessagesToFile() {
+        synchronized (lockMessages) {
+            while (isWritingMessages) { // Wait if another thread is writing
+                try {
+                    lockMessages.wait();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
             }
-            logMessage("Messages saved to file.");
-        } catch (IOException e) {
-            logMessage("Error saving messages to file: " + e.getMessage());
+            isWritingMessages = true; // Mark that writing is in progress
+
+            try (FileWriter writer = new FileWriter("messages.txt")) {
+                for (String message : messages) {
+                    writer.write(message + System.lineSeparator());
+                }
+                logMessage("Messages saved to file.");
+            } catch (IOException e) {
+                logMessage("Error saving messages to file: " + e.getMessage());
+            } finally {
+                isWritingMessages = false; // Reset flag
+                lockMessages.notifyAll(); // Notify waiting threads
+            }
         }
     }
 
     private static void loadMessagesFromFile() {
-        File file = new File("messages.txt");
-        if (!file.exists()) {
-            logMessage("No existing messages file found. Starting with an empty list.");
-            return;
-        }
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                messages.add(line);
+        synchronized (lockMessages) {
+            while (isWritingMessages) { // Wait if a thread is writing
+                try {
+                    lockMessages.wait();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
             }
-            logMessage("Messages loaded from file.");
-        } catch (IOException e) {
-            logMessage("Error loading messages from file: " + e.getMessage());
+
+            File file = new File("messages.txt");
+            if (!file.exists()) {
+                logMessage("No existing messages file found. Starting with an empty list.");
+                return;
+            }
+
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                messages.clear();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    messages.add(line);
+                }
+                logMessage("Messages loaded from file.");
+            } catch (IOException e) {
+                logMessage("Error loading messages from file: " + e.getMessage());
+            } finally {
+                lockMessages.notifyAll(); // Notify waiting threads
+            }
         }
     }
 
