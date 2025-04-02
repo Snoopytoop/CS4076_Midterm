@@ -1,4 +1,4 @@
-package org.example.midtermproject2;
+package com.example.cs4076;
 
 public class IncorrectActionException extends RuntimeException {
     public IncorrectActionException(String message) {

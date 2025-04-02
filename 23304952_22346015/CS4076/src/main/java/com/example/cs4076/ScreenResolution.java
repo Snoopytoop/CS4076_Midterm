@@ -1,4 +1,4 @@
-package org.example.midtermproject2;
+package com.example.cs4076;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;

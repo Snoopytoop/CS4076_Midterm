@@ -1,4 +1,4 @@
-package org.example.midtermproject2;
+package com.example.cs4076;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,8 +6,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import static org.example.midtermproject2.Server.handleClientMessage;
-import static org.example.midtermproject2.Server.logMessage;
+import static com.example.cs4076.Server.handleClientMessage;
+import static com.example.cs4076.Server.logMessage;
 
 class ClientHandler implements Runnable {
     private Socket clientSocket;

@@ -1,4 +1,4 @@
-package org.example.midtermproject2;
+package com.example.cs4076;
 //create lecture object
 public class Lecture {
     private final String name;
