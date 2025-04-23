@@ -1,4 +1,4 @@
-package com.example.cs4076;
+package org.example.finalproject;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
