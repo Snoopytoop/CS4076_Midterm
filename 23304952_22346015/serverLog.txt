@@ -1,0 +1,78 @@
+[2025-04-23 21:21:38] No messages file found.
+[2025-04-23 21:21:38] Timetable loaded from file.
+[2025-04-23 21:21:38] Server started on port 1234
+[2025-04-23 21:21:43] New connection: 192.168.0.14
+[2025-04-23 21:21:45] Received message: arrayRequest
+[2025-04-23 21:21:51] Received message: add,Programming-Room 3-3-2
+[2025-04-23 21:21:51] Timetable saved to file.
+[2025-04-23 21:21:51] Received message: arrayRequest
+[2025-04-23 21:21:51] Received message: arrayRequest
+[2025-04-23 21:23:41] Received message: sendMessage,test1
+[2025-04-23 21:23:41] Messages saved to file.
+[2025-04-23 21:24:01] Received message: fetchMessages
+[2025-04-23 21:42:10] Messages loaded from file.
+[2025-04-23 21:42:10] Timetable loaded from file.
+[2025-04-23 21:42:10] Server started on port 1234
+[2025-04-23 21:43:23] New connection: 192.168.0.14
+[2025-04-23 21:43:27] Received message: fetchMessages
+[2025-04-23 21:43:35] Received message: sendMessage,test2
+[2025-04-23 21:43:35] Messages saved to file.
+[2025-04-23 21:43:36] Received message: fetchMessages
+[2025-04-23 21:52:08] Messages loaded from file.
+[2025-04-23 21:52:08] Timetable loaded from file.
+[2025-04-23 21:52:08] Server started on port 1234
+[2025-04-23 21:52:31] New connection: 192.168.0.14
+[2025-04-23 21:52:36] Received message: arrayRequest
+[2025-04-23 21:52:42] Received message: add,Programming-Room 2-3-3
+[2025-04-23 21:52:42] Timetable saved to file.
+[2025-04-23 21:52:42] Received message: arrayRequest
+[2025-04-23 21:52:42] Received message: arrayRequest
+[2025-04-23 21:52:52] Received message: STOP
+[2025-04-23 21:55:10] Initiating server shutdown...
+[2025-04-23 21:55:10] Connection error: Socket closed
+[2025-04-23 21:55:10] Connection error: Socket is closed
+[2025-04-23 21:55:10] Connection error: Socket is closed
+[2025-04-23 21:55:10] Connection error: Socket is closed
+[2025-04-23 21:55:10] Connection error: Socket is closed
+[2025-04-23 21:55:10] Connection error: Socket is closed
+[2025-04-23 22:03:22] Messages loaded from file.
+[2025-04-23 22:03:22] Timetable loaded from file.
+[2025-04-23 22:03:22] Server started on port 1234
+[2025-04-23 22:03:26] New connection: 192.168.0.14
+[2025-04-23 22:04:12] Received message: STOP
+[2025-04-23 22:12:35] Messages loaded from file.
+[2025-04-23 22:12:35] Timetable loaded from file.
+[2025-04-23 22:12:35] Server started on port 1234
+[2025-04-23 22:12:45] New connection: 192.168.0.14
+[2025-04-23 22:12:46] New connection: 192.168.0.14
+[2025-04-23 22:13:38] Disconnecting client: 192.168.0.14
+[2025-04-23 22:13:38] Error handling client: Socket closed
+[2025-04-23 22:13:41] Received message: arrayRequest
+[2025-04-23 22:13:51] Received message: STOP
+[2025-04-23 22:29:57] Messages loaded from file.
+[2025-04-23 22:29:57] Timetable loaded from file.
+[2025-04-23 22:29:57] Server started on port 1234
+[2025-04-23 22:30:05] New connection: 192.168.0.14
+[2025-04-23 22:35:05] Messages loaded from file.
+[2025-04-23 22:35:05] Timetable loaded from file.
+[2025-04-23 22:35:05] Server started on port 1234
+[2025-04-23 22:35:11] New connection: 192.168.0.14
+[2025-04-23 22:35:18] Disconnecting client: 192.168.0.14
+[2025-04-23 22:35:18] Error handling client: Socket closed
+[2025-04-23 22:35:27] New connection: 192.168.0.14
+[2025-04-23 22:35:27] New connection: 192.168.0.14
+[2025-04-23 22:35:32] Disconnecting client: 192.168.0.14
+[2025-04-23 22:35:32] Error handling client: Socket closed
+[2025-04-23 22:35:34] Disconnecting client: 192.168.0.14
+[2025-04-23 22:35:34] Error handling client: Socket closed
+[2025-04-23 22:36:23] New connection: 192.168.0.14
+[2025-04-23 22:36:53] Disconnecting client: 192.168.0.14
+[2025-04-23 22:36:53] Error handling client: Socket closed
+[2025-04-23 22:38:25] Initiating server shutdown...
+[2025-04-23 22:38:25] Connection error: Socket closed
+[2025-04-23 22:38:25] Connection error: Socket is closed
+[2025-04-23 22:38:25] Connection error: Socket is closed
+[2025-04-23 22:38:25] Connection error: Socket is closed
+[2025-04-23 22:38:25] Connection error: Socket is closed
+[2025-04-23 22:38:25] Connection error: Socket is closed
+[2025-04-23 22:38:25] Connection error: Socket is closed
