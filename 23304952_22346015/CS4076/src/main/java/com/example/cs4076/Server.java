@@ -11,6 +11,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ForkJoinTask;
+import java.util.concurrent.RecursiveAction;
 import java.util.function.BooleanSupplier;
 import java.io.*;
 import java.net.ServerSocket;
@@ -21,6 +25,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -41,8 +46,8 @@ public class Server extends Application {
             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private static final Path LOG_PATH = Path.of("serverLog.txt");
     private static final Object FILE_LOCK = new Object();
-    private static TextArea logArea;                 // UI component
-    private static final List<String> logBuffer = new ArrayList<>(); // holds logs before UI exists
+    private static TextArea logArea;
+    private static final List<String> logBuffer = new ArrayList<>();
 
     // UI
     private StackPane rootPane;
@@ -63,8 +68,8 @@ public class Server extends Application {
     /* ---------- APPLICATION ENTRY ---------- */
 
     public static void main(String[] args) {
-        new Thread(Server::setup).start(); // network & persistence
-        launch(args);                      // JavaFX UI
+        new Thread(Server::setup).start();
+        launch(args);
     }
 
     private static void setup() {
@@ -138,7 +143,6 @@ public class Server extends Application {
 
         Button logBtn = new Button("View Server Log");
         logBtn.setOnAction(e -> showServerLog());
-
 
         Button exitBtn = new Button("Shutdown Server");
         exitBtn.setStyle("-fx-background-color: #ff4444;");
@@ -224,7 +228,6 @@ public class Server extends Application {
         clientControl.getConnectedClients().forEach(this::addClientToUi);
     }
 
-    /** Opens a modal window showing the full contents of serverLog.txt */
     private void showServerLog() {
         StringBuilder content = new StringBuilder();
         try (BufferedReader br = new BufferedReader(new FileReader(LOG_PATH.toFile()))) {
@@ -248,7 +251,6 @@ public class Server extends Application {
         dlg.showAndWait();
     }
 
-
     private void toggleClientPanel() {
         showingClientPanel = !showingClientPanel;
         mainPanel.setVisible(!showingClientPanel);
@@ -258,19 +260,13 @@ public class Server extends Application {
 
     private void kickClient(Socket client) {
         try {
-            // 1) tell the client to shut itself down
             new PrintWriter(client.getOutputStream(), true).println("TERMINATE");
-
-            // 2) add your log entry
             logMessage("Disconnecting client: " + client.getInetAddress().getHostAddress());
-
-            // 3) close the socket
             client.close();
         } catch (IOException ex) {
             logMessage("Error disconnecting client: " + ex.getMessage());
         }
     }
-
 
     private void shutdownServer() {
         logMessage("Initiating server shutdown...");
@@ -288,18 +284,14 @@ public class Server extends Application {
 
     static void logMessage(String msg) {
         String entry = "[" + LocalDateTime.now().format(TS) + "] " + msg;
-
-        // console
         System.out.println(entry);
 
-        // UI
         if (logArea != null) {
             Platform.runLater(() -> logArea.appendText(entry + '\n'));
         } else {
             logBuffer.add(entry);
         }
 
-        // file (append, thread‑safe)
         synchronized (FILE_LOCK) {
             try (FileWriter fw = new FileWriter(LOG_PATH.toFile(), true);
                  BufferedWriter bw = new BufferedWriter(fw);
@@ -307,7 +299,6 @@ public class Server extends Application {
             {
                 pw.println(entry);
             } catch (IOException ex) {
-                // fallback to console only — do NOT recurse
                 System.err.println("Failed to write log: " + ex.getMessage());
             }
         }
@@ -320,32 +311,26 @@ public class Server extends Application {
 
         if (message.startsWith("arrayRequest")) {
             out.println(convertArrayToString());
-
         } else if (message.startsWith("remove")) {
             String[] p = message.split(",")[1].split("-");
             int r = Integer.parseInt(p[0]), c = Integer.parseInt(p[1]);
             lectures[r][c] = null;
             saveTimetableToFile();
             out.println(convertArrayToString());
-
         } else if (message.startsWith("add")) {
             String[] p = message.split(",")[1].split("-");
             int r = Integer.parseInt(p[2]), c = Integer.parseInt(p[3]);
             lectures[r][c] = new Lecture(p[0], p[1]);
             saveTimetableToFile();
             out.println(convertArrayToString());
-
         } else if (message.startsWith("sendMessage,")) {
             messages.add(message.substring(message.indexOf(',') + 1));
             saveMessagesToFile();
             out.println("Message sent successfully!");
-
         } else if (message.startsWith("fetchMessages")) {
             out.println(String.join("&&", messages));
-
         } else if (message.equals("STOP")) {
             out.println("TERMINATE");
-
         } else if (message.equals("optimizeTimetable")) {
             optimizeTimetable();
             saveTimetableToFile();
@@ -361,7 +346,7 @@ public class Server extends Application {
         return sb.toString();
     }
 
-    /* ---------- FILE PERSISTENCE (messages & timetable) ---------- */
+    /* ---------- FILE PERSISTENCE ---------- */
 
     private static void saveMessagesToFile() {
         synchronized (lockMessages) {
@@ -437,24 +422,23 @@ public class Server extends Application {
     /* ---------- TIMETABLE OPTIMISATION ---------- */
 
     private static void optimizeTimetable() {
-        Thread[] threads = new Thread[5];
+        OptimizeDayTask[] tasks = new OptimizeDayTask[5];
         for (int d = 0; d < 5; d++) {
-            final int day = d;
-            threads[d] = new Thread(() -> optimizeDay(day));
-            threads[d].start();
+            tasks[d] = new OptimizeDayTask(d);
         }
-        for (Thread t : threads) try { t.join(); } catch (InterruptedException ignored) {}
+        ForkJoinTask.invokeAll(tasks);
         logMessage("Timetable optimization complete for all days");
     }
 
-    private static void optimizeDay(int day) {
+
+    static void optimizeDay(int day) {
         for (int slot = 0; slot < 9; slot++) {
             Lecture lec = lectures[slot][day];
             if (lec == null) continue;
             for (int earlier = 0; earlier < slot; earlier++) {
                 if (lectures[earlier][day] == null) {
                     lectures[earlier][day] = lec;
-                    lectures[slot][day]   = null;
+                    lectures[slot][day] = null;
                     logMessage(String.format("Moved %s from %d-%d to %d-%d",
                             lec.getName(), slot, day, earlier, day));
                     break;
@@ -463,16 +447,12 @@ public class Server extends Application {
         }
     }
 
-    /* ---------- UTILITY ---------- */
-
     private static void waitWhile(BooleanSupplier cond, Object lock) {
         while (cond.getAsBoolean()) {
             try { lock.wait(); }
             catch (InterruptedException ex) { Thread.currentThread().interrupt(); }
         }
     }
-
-    /* ---------- CLIENT HANDLER ---------- */
 
     private static class ClientHandler implements Runnable {
         private final Socket socket;
@@ -495,6 +475,18 @@ public class Server extends Application {
                 catch (IOException ignored) {}
                 clientControl.unregisterClient(socket);
             }
+        }
+    }
+
+    /* ---------- NEW: OptimizeDayTask ---------- */
+
+    private static class OptimizeDayTask extends RecursiveAction {
+        private final int day;
+        OptimizeDayTask(int day) { this.day = day; }
+
+        @Override
+        protected void compute() {
+            optimizeDay(day);
         }
     }
 }
