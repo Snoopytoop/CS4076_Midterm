@@ -1,0 +1,362 @@
+[2025-04-25 16:50:55] No messages file found.
+[2025-04-25 16:50:55] No timetable file found.
+[2025-04-25 16:50:55] Server started on port 1234
+[2025-04-25 16:50:56] New connection: 172.17.80.1
+[2025-04-25 16:50:57] New connection: 172.17.80.1
+[2025-04-25 16:50:58] New connection: 172.17.80.1
+[2025-04-25 16:50:58] Received message: arrayRequest
+[2025-04-25 16:51:00] New connection: 172.17.80.1
+[2025-04-25 16:51:03] Received message: arrayRequest
+[2025-04-25 16:51:05] Received message: arrayRequest
+[2025-04-25 16:51:08] Received message: arrayRequest
+[2025-04-25 16:51:14] Disconnecting client: 172.17.80.1
+[2025-04-25 16:51:14] Error handling client: Socket closed
+[2025-04-25 16:51:28] Initiating server shutdown...
+[2025-04-25 16:51:28] Connection error: Socket closed
+[2025-04-25 16:51:28] Connection error: Socket is closed
+[2025-04-25 16:51:28] Connection error: Socket is closed
+[2025-04-25 16:51:28] Connection error: Socket is closed
+[2025-04-26 19:27:03] No messages file found.
+[2025-04-26 19:27:03] No timetable file found.
+[2025-04-26 19:27:03] Server started on port 1234
+[2025-04-26 19:27:16] New connection: 172.17.80.1
+[2025-04-26 19:27:18] New connection: 172.17.80.1
+[2025-04-26 19:27:19] New connection: 172.17.80.1
+[2025-04-26 19:28:05] Initiating server shutdown...
+[2025-04-26 19:28:05] Connection error: Socket closed
+[2025-04-26 19:28:05] Connection error: Socket is closed
+[2025-04-26 19:28:31] No messages file found.
+[2025-04-26 19:28:31] No timetable file found.
+[2025-04-26 19:28:31] Server started on port 1234
+[2025-04-26 19:28:41] New connection: 172.17.80.1
+[2025-04-26 19:28:42] New connection: 172.17.80.1
+[2025-04-26 19:28:43] New connection: 172.17.80.1
+[2025-04-26 19:28:47] Received message: STOP
+[2025-04-26 19:28:50] Initiating server shutdown...
+[2025-04-26 19:28:50] Connection error: Socket closed
+[2025-04-26 19:28:50] Connection error: Socket is closed
+[2025-04-26 19:28:50] Connection error: Socket is closed
+[2025-04-26 19:30:41] No messages file found.
+[2025-04-26 19:30:41] No timetable file found.
+[2025-04-26 19:30:41] Server started on port 1234
+[2025-04-26 19:31:10] No messages file found.
+[2025-04-26 19:31:10] No timetable file found.
+[2025-04-26 19:31:10] Server started on port 1234
+[2025-04-26 19:31:22] New connection: 172.17.80.1
+[2025-04-26 19:31:24] New connection: 172.17.80.1
+[2025-04-26 19:31:26] New connection: 172.17.80.1
+[2025-04-26 19:33:05] Disconnecting client: 172.17.80.1
+[2025-04-26 19:33:05] Error handling client: Socket closed
+[2025-04-26 19:33:05] Disconnecting client: 172.17.80.1
+[2025-04-26 19:33:05] Error handling client: Socket closed
+[2025-04-26 19:33:06] Disconnecting client: 172.17.80.1
+[2025-04-26 19:33:06] Error handling client: Socket closed
+[2025-04-26 19:33:09] Initiating server shutdown...
+[2025-04-26 19:33:09] Connection error: Socket closed
+[2025-04-26 19:33:09] Connection error: Socket is closed
+[2025-04-26 19:33:09] Connection error: Socket is closed
+[2025-04-26 19:33:22] No messages file found.
+[2025-04-26 19:33:22] No timetable file found.
+[2025-04-26 19:33:22] Server started on port 1234
+[2025-04-26 19:33:33] New connection: 172.17.80.1
+[2025-04-26 19:33:34] New connection: 172.17.80.1
+[2025-04-26 19:33:35] New connection: 172.17.80.1
+[2025-04-26 19:34:18] Received message: arrayRequest
+[2025-04-26 19:34:25] Received message: STOP
+[2025-04-26 19:34:28] Disconnecting client: 172.17.80.1
+[2025-04-26 19:34:28] Error handling client: Socket closed
+[2025-04-26 19:34:29] Disconnecting client: 172.17.80.1
+[2025-04-26 19:34:29] Error handling client: Socket closed
+[2025-04-26 19:34:32] Initiating server shutdown...
+[2025-04-26 19:34:32] Connection error: Socket closed
+[2025-04-26 19:34:32] Connection error: Socket is closed
+[2025-04-26 19:34:32] Connection error: Socket is closed
+[2025-04-26 19:34:50] No messages file found.
+[2025-04-26 19:34:50] No timetable file found.
+[2025-04-26 19:34:50] Server started on port 1234
+[2025-04-26 19:34:54] New connection: 172.17.80.1
+[2025-04-26 19:35:12] Error handling client: Connection reset
+[2025-04-26 19:35:13] New connection: 172.17.80.1
+[2025-04-26 19:35:18] Received message: arrayRequest
+[2025-04-26 19:35:31] Error handling client: Connection reset
+[2025-04-26 19:35:33] New connection: 172.17.80.1
+[2025-04-26 19:35:52] No messages file found.
+[2025-04-26 19:35:52] No timetable file found.
+[2025-04-26 19:35:52] Server started on port 1234
+[2025-04-26 19:36:02] New connection: 172.17.80.1
+[2025-04-26 19:36:04] New connection: 172.17.80.1
+[2025-04-26 19:36:05] New connection: 172.17.80.1
+[2025-04-26 19:36:20] Disconnecting client: 172.17.80.1
+[2025-04-26 19:36:20] Error handling client: Socket closed
+[2025-04-26 19:36:27] Received message: arrayRequest
+[2025-04-26 19:36:44] Received message: arrayRequest
+[2025-04-26 19:36:52] Received message: arrayRequest
+[2025-04-26 19:36:58] Received message: add,OS-Room 2-0-0
+[2025-04-26 19:36:58] Timetable saved to file.
+[2025-04-26 19:36:58] Received message: arrayRequest
+[2025-04-26 19:36:58] Received message: arrayRequest
+[2025-04-26 19:37:02] Received message: arrayRequest
+[2025-04-26 19:37:17] Disconnecting client: 172.17.80.1
+[2025-04-26 19:37:17] Error handling client: Socket closed
+[2025-04-26 19:37:18] Disconnecting client: 172.17.80.1
+[2025-04-26 19:37:18] Error handling client: Socket closed
+[2025-04-26 19:37:23] Initiating server shutdown...
+[2025-04-26 19:37:23] Connection error: Socket closed
+[2025-04-26 19:37:23] Connection error: Socket is closed
+[2025-04-26 19:37:23] Connection error: Socket is closed
+[2025-04-26 19:37:23] Connection error: Socket is closed
+[2025-04-26 19:37:43] No messages file found.
+[2025-04-26 19:37:43] Timetable loaded from file.
+[2025-04-26 19:37:43] Server started on port 1234
+[2025-04-26 19:38:02] New connection: 172.17.80.1
+[2025-04-26 19:38:10] Received message: sendMessage,This is a test message
+[2025-04-26 19:38:10] Messages saved to file.
+[2025-04-26 19:38:14] Received message: arrayRequest
+[2025-04-26 19:38:22] Received message: add,Programming-Room 3-3-2
+[2025-04-26 19:38:22] Timetable saved to file.
+[2025-04-26 19:38:22] Received message: arrayRequest
+[2025-04-26 19:38:22] Received message: arrayRequest
+[2025-04-26 19:38:28] Received message: add,DSA-Room 3-4-0
+[2025-04-26 19:38:28] Timetable saved to file.
+[2025-04-26 19:38:28] Received message: arrayRequest
+[2025-04-26 19:38:28] Received message: arrayRequest
+[2025-04-26 19:38:37] Received message: add,Graphics-Room 6-2-3
+[2025-04-26 19:38:37] Timetable saved to file.
+[2025-04-26 19:38:37] Received message: arrayRequest
+[2025-04-26 19:38:37] Received message: arrayRequest
+[2025-04-26 19:38:46] Received message: add,Maths-Room 1-1-3
+[2025-04-26 19:38:46] Timetable saved to file.
+[2025-04-26 19:38:46] Received message: arrayRequest
+[2025-04-26 19:38:46] Received message: arrayRequest
+[2025-04-26 19:38:55] Received message: add,DSA-Room 2-6-3
+[2025-04-26 19:38:55] Timetable saved to file.
+[2025-04-26 19:38:55] Received message: arrayRequest
+[2025-04-26 19:38:55] Received message: arrayRequest
+[2025-04-26 19:39:05] Received message: add,OS-Room 4-3-1
+[2025-04-26 19:39:05] Timetable saved to file.
+[2025-04-26 19:39:05] Received message: arrayRequest
+[2025-04-26 19:39:05] Received message: arrayRequest
+[2025-04-26 19:39:15] Messages loaded from file.
+[2025-04-26 19:39:15] Timetable loaded from file.
+[2025-04-26 19:39:15] Server started on port 1234
+[2025-04-26 19:39:20] Initiating server shutdown...
+[2025-04-26 19:39:20] Connection error: Socket closed
+[2025-04-26 19:39:20] Connection error: Socket is closed
+[2025-04-26 19:39:20] Connection error: Socket is closed
+[2025-04-26 19:39:27] Messages loaded from file.
+[2025-04-26 19:39:27] Timetable loaded from file.
+[2025-04-26 19:39:27] Server started on port 1234
+[2025-04-26 19:39:37] New connection: 172.17.80.1
+[2025-04-26 19:39:38] New connection: 172.17.80.1
+[2025-04-26 19:39:39] New connection: 172.17.80.1
+[2025-04-26 19:39:57] Disconnecting client: 172.17.80.1
+[2025-04-26 19:39:57] Error handling client: Socket closed
+[2025-04-26 19:40:10] Received message: arrayRequest
+[2025-04-26 19:40:14] Received message: arrayRequest
+[2025-04-26 19:40:36] Received message: arrayRequest
+[2025-04-26 19:40:45] Received message: arrayRequest
+[2025-04-26 19:41:19] Received message: add,Maths-Room 6-1-1
+[2025-04-26 19:41:19] Timetable saved to file.
+[2025-04-26 19:41:19] Received message: arrayRequest
+[2025-04-26 19:41:19] Received message: arrayRequest
+[2025-04-26 19:42:17] Received message: arrayRequest
+[2025-04-26 19:55:18] Received message: arrayRequest
+[2025-04-26 19:55:19] Received message: arrayRequest
+[2025-04-26 19:56:30] Messages loaded from file.
+[2025-04-26 19:56:30] Timetable loaded from file.
+[2025-04-26 19:56:30] Server started on port 1234
+[2025-04-26 19:56:32] New connection: 172.17.80.1
+[2025-04-26 19:56:33] New connection: 172.17.80.1
+[2025-04-26 19:56:34] New connection: 172.17.80.1
+[2025-04-26 19:56:49] Received message: arrayRequest
+[2025-04-26 19:56:51] Received message: arrayRequest
+[2025-04-26 19:56:58] Received message: arrayRequest
+[2025-04-26 19:57:11] Received message: optimizeTimetable
+[2025-04-26 19:57:11] Moved Maths from 1-1 to 0-1
+[2025-04-26 19:57:11] Moved Maths from 1-3 to 0-3
+[2025-04-26 19:57:11] Moved Programming from 3-2 to 0-2
+[2025-04-26 19:57:11] Moved DSA from 4-0 to 1-0
+[2025-04-26 19:57:11] Moved Graphics from 2-3 to 1-3
+[2025-04-26 19:57:11] Moved OS from 3-1 to 1-1
+[2025-04-26 19:57:11] Moved DSA from 6-3 to 2-3
+[2025-04-26 19:57:11] Timetable optimization complete for all days
+[2025-04-26 19:57:11] Timetable saved to file.
+[2025-04-26 19:57:11] Received message: arrayRequest
+[2025-04-26 19:57:29] Messages loaded from file.
+[2025-04-26 19:57:29] Timetable loaded from file.
+[2025-04-26 19:57:29] Server started on port 1234
+[2025-04-26 19:57:31] New connection: 172.17.80.1
+[2025-04-26 19:57:32] New connection: 172.17.80.1
+[2025-04-26 19:57:34] New connection: 172.17.80.1
+[2025-04-26 19:57:45] Messages loaded from file.
+[2025-04-26 19:57:45] Timetable loaded from file.
+[2025-04-26 19:57:45] Server started on port 1234
+[2025-04-26 19:57:47] New connection: 172.17.80.1
+[2025-04-26 19:57:48] New connection: 172.17.80.1
+[2025-04-26 19:57:50] New connection: 172.17.80.1
+[2025-04-26 19:58:00] Received message: arrayRequest
+[2025-04-26 19:58:01] Received message: arrayRequest
+[2025-04-26 19:58:02] Received message: arrayRequest
+[2025-04-26 19:58:24] Received message: arrayRequest
+[2025-04-26 19:58:25] Received message: remove,1-0
+[2025-04-26 19:58:25] Timetable saved to file.
+[2025-04-26 19:58:25] Received message: arrayRequest
+[2025-04-26 19:58:25] Received message: arrayRequest
+[2025-04-26 19:58:26] Received message: remove,1-1
+[2025-04-26 19:58:26] Timetable saved to file.
+[2025-04-26 19:58:26] Received message: arrayRequest
+[2025-04-26 19:58:26] Received message: arrayRequest
+[2025-04-26 19:58:26] Received message: remove,0-2
+[2025-04-26 19:58:26] Timetable saved to file.
+[2025-04-26 19:58:26] Received message: arrayRequest
+[2025-04-26 19:58:26] Received message: arrayRequest
+[2025-04-26 19:58:27] Received message: remove,0-3
+[2025-04-26 19:58:27] Timetable saved to file.
+[2025-04-26 19:58:27] Received message: arrayRequest
+[2025-04-26 19:58:27] Received message: arrayRequest
+[2025-04-26 19:58:27] Received message: remove,1-3
+[2025-04-26 19:58:27] Timetable saved to file.
+[2025-04-26 19:58:27] Received message: arrayRequest
+[2025-04-26 19:58:27] Received message: arrayRequest
+[2025-04-26 19:58:28] Received message: remove,2-3
+[2025-04-26 19:58:28] Timetable saved to file.
+[2025-04-26 19:58:28] Received message: arrayRequest
+[2025-04-26 19:58:28] Received message: arrayRequest
+[2025-04-26 19:58:33] Received message: add,OS-Room 3-2-2
+[2025-04-26 19:58:33] Timetable saved to file.
+[2025-04-26 19:58:33] Received message: arrayRequest
+[2025-04-26 19:58:33] Received message: arrayRequest
+[2025-04-26 19:58:39] Received message: add,DSA-Room 1-2-1
+[2025-04-26 19:58:39] Timetable saved to file.
+[2025-04-26 19:58:39] Received message: arrayRequest
+[2025-04-26 19:58:39] Received message: arrayRequest
+[2025-04-26 19:58:46] Received message: add,Maths-Room 2-6-4
+[2025-04-26 19:58:46] Timetable saved to file.
+[2025-04-26 19:58:46] Received message: arrayRequest
+[2025-04-26 19:58:46] Received message: arrayRequest
+[2025-04-26 19:58:59] Received message: add,Graphics-Room 1-5-1
+[2025-04-26 19:58:59] Timetable saved to file.
+[2025-04-26 19:58:59] Received message: arrayRequest
+[2025-04-26 19:58:59] Received message: arrayRequest
+[2025-04-26 19:59:05] Received message: add,DSA-Room 2-4-2
+[2025-04-26 19:59:05] Timetable saved to file.
+[2025-04-26 19:59:05] Received message: arrayRequest
+[2025-04-26 19:59:05] Received message: arrayRequest
+[2025-04-26 19:59:16] Received message: add,Programming-Room 1-4-3
+[2025-04-26 19:59:16] Timetable saved to file.
+[2025-04-26 19:59:16] Received message: arrayRequest
+[2025-04-26 19:59:16] Received message: arrayRequest
+[2025-04-26 19:59:21] Received message: add,Programming-Room 1-5-3
+[2025-04-26 19:59:21] Timetable saved to file.
+[2025-04-26 19:59:21] Received message: arrayRequest
+[2025-04-26 19:59:21] Received message: arrayRequest
+[2025-04-26 19:59:30] Received message: add,Graphics-Room 5-1-3
+[2025-04-26 19:59:30] Timetable saved to file.
+[2025-04-26 19:59:30] Received message: arrayRequest
+[2025-04-26 19:59:30] Received message: arrayRequest
+[2025-04-26 19:59:33] Received message: arrayRequest
+[2025-04-26 19:59:48] Messages loaded from file.
+[2025-04-26 19:59:48] Timetable loaded from file.
+[2025-04-26 19:59:48] Server started on port 1234
+[2025-04-26 19:59:52] New connection: 172.17.80.1
+[2025-04-26 19:59:53] New connection: 172.17.80.1
+[2025-04-26 19:59:54] New connection: 172.17.80.1
+[2025-04-26 20:00:05] Received message: arrayRequest
+[2025-04-26 20:00:06] Received message: arrayRequest
+[2025-04-26 20:00:07] Received message: arrayRequest
+[2025-04-26 20:00:12] Received message: optimizeTimetable
+[2025-04-26 20:00:12] Moved DSA from 2-1 to 1-1
+[2025-04-26 20:00:12] Moved Maths from 6-4 to 0-4
+[2025-04-26 20:00:12] Moved Graphics from 1-3 to 0-3
+[2025-04-26 20:00:12] Moved OS from 2-2 to 0-2
+[2025-04-26 20:00:12] Moved Programming from 4-3 to 1-3
+[2025-04-26 20:00:12] Moved Graphics from 5-1 to 2-1
+[2025-04-26 20:00:12] Moved Programming from 5-3 to 2-3
+[2025-04-26 20:00:12] Moved DSA from 4-2 to 1-2
+[2025-04-26 20:00:12] Timetable optimization complete for all days
+[2025-04-26 20:00:12] Timetable saved to file.
+[2025-04-26 20:00:12] Received message: arrayRequest
+[2025-04-26 20:01:00] Received message: arrayRequest
+[2025-04-26 20:01:02] Received message: arrayRequest
+[2025-04-26 20:02:04] Received message: fetchMessages
+[2025-04-26 20:02:07] Received message: fetchMessages
+[2025-04-26 20:02:10] Received message: fetchMessages
+[2025-04-26 20:02:25] Received message: sendMessage,no programming class on friday
+[2025-04-26 20:02:25] Messages saved to file.
+[2025-04-26 20:20:32] Received message: fetchMessages
+[2025-04-26 20:20:42] Disconnecting client: 172.17.80.1
+[2025-04-26 20:20:42] Error handling client: Socket closed
+[2025-04-26 20:20:43] Disconnecting client: 172.17.80.1
+[2025-04-26 20:20:43] Error handling client: Socket closed
+[2025-04-26 20:20:44] Disconnecting client: 172.17.80.1
+[2025-04-26 20:20:44] Error handling client: Socket closed
+[2025-04-26 20:20:48] Initiating server shutdown...
+[2025-04-26 20:20:48] Connection error: Socket closed
+[2025-04-26 20:20:48] Connection error: Socket is closed
+[2025-04-26 20:20:48] Connection error: Socket is closed
+[2025-04-26 20:20:48] Connection error: Socket is closed
+[2025-04-26 20:30:00] Messages loaded from file.
+[2025-04-26 20:30:00] Timetable loaded from file.
+[2025-04-26 20:30:00] Server started on port 1234
+[2025-04-26 20:30:03] New connection: 172.17.80.1
+[2025-04-26 20:30:04] New connection: 172.17.80.1
+[2025-04-26 20:30:19] Received message: fetchMessages
+[2025-04-26 20:30:25] Received message: sendMessage,
+[2025-04-26 20:30:25] Messages saved to file.
+[2025-04-26 20:30:42] Messages loaded from file.
+[2025-04-26 20:30:42] Timetable loaded from file.
+[2025-04-26 20:30:42] Server started on port 1234
+[2025-04-26 20:30:47] New connection: 172.17.80.1
+[2025-04-26 20:30:48] New connection: 172.17.80.1
+[2025-04-26 20:30:59] Received message: fetchMessages
+[2025-04-26 20:31:14] Received message: sendMessage,example
+[2025-04-26 20:31:14] Messages saved to file.
+[2025-04-26 20:31:50] Received message: fetchMessages
+[2025-04-26 20:31:56] Received message: fetchMessages
+[2025-04-26 20:32:26] Messages loaded from file.
+[2025-04-26 20:32:26] Timetable loaded from file.
+[2025-04-26 20:32:26] Server started on port 1234
+[2025-04-26 20:32:31] New connection: 172.17.80.1
+[2025-04-26 20:32:32] New connection: 172.17.80.1
+[2025-04-26 20:32:44] Received message: fetchMessages
+[2025-04-26 20:33:10] Received message: sendMessage,new example
+[2025-04-26 20:33:10] Messages saved to file.
+[2025-04-26 20:34:03] Messages loaded from file.
+[2025-04-26 20:34:03] Timetable loaded from file.
+[2025-04-26 20:34:03] Server started on port 1234
+[2025-04-26 20:34:08] New connection: 172.17.80.1
+[2025-04-26 20:34:09] New connection: 172.17.80.1
+[2025-04-26 20:34:23] Received message: fetchMessages
+[2025-04-26 20:35:49] Messages loaded from file.
+[2025-04-26 20:35:49] Timetable loaded from file.
+[2025-04-26 20:35:49] Server started on port 1234
+[2025-04-26 20:35:54] New connection: 172.17.80.1
+[2025-04-26 20:35:56] New connection: 172.17.80.1
+[2025-04-26 20:36:02] Received message: fetchMessages
+[2025-04-26 20:36:14] Received message: sendMessage,another message
+[2025-04-26 20:36:14] Messages saved to file.
+[2025-04-26 20:36:34] Received message: fetchMessages
+[2025-04-26 20:37:58] Received message: fetchMessages
+[2025-04-26 20:38:08] Disconnecting client: 172.17.80.1
+[2025-04-26 20:38:08] Error handling client: Socket closed
+[2025-04-26 20:38:09] Disconnecting client: 172.17.80.1
+[2025-04-26 20:38:09] Error handling client: Socket closed
+[2025-04-26 20:38:12] Initiating server shutdown...
+[2025-04-26 20:38:12] Connection error: Socket closed
+[2025-04-26 20:38:12] Connection error: Socket is closed
+[2025-04-26 20:38:12] Connection error: Socket is closed
+[2025-04-26 20:38:12] Connection error: Socket is closed
+[2025-04-26 22:25:48] Messages loaded from file.
+[2025-04-26 22:25:48] Timetable loaded from file.
+[2025-04-26 22:25:48] Server started on port 1234
+[2025-04-26 22:25:53] New connection: 172.17.80.1
+[2025-04-26 22:25:54] Received message: arrayRequest
+[2025-04-26 22:26:00] Received message: add,OS-Room 2-6-1
+[2025-04-26 22:26:00] Timetable saved to file.
+[2025-04-26 22:26:00] Received message: arrayRequest
+[2025-04-26 22:26:00] Received message: arrayRequest
+[2025-04-26 22:26:02] Received message: optimizeTimetable
+[2025-04-26 22:26:02] Moved OS from 6-1 to 3-1
+[2025-04-26 22:26:02] Timetable optimization complete for all days
+[2025-04-26 22:26:02] Timetable saved to file.
+[2025-04-26 22:26:02] Received message: arrayRequest
